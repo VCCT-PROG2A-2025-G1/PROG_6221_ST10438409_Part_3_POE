@@ -38,7 +38,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +52,13 @@
     <Compile Include="ChatbotLogic.cs" />
     <Compile Include="Communication.cs" />
     <Compile Include="ConsoleFormat.cs" />
+    <Compile Include="FirstLoadingScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FirstLoadingScreen.Designer.cs">
+      <DependentUpon>FirstLoadingScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI_Functions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,6 +74,11 @@
     <Content Include="Resources\Greeting.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FirstLoadingScreen.resx">
+      <DependentUpon>FirstLoadingScreen.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

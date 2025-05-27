@@ -14,10 +14,13 @@
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Speech.Synthesis.TtsEngine;
 using System.Text.RegularExpressions;
 using System.Threading;
 //------------------------------------------------------------------------------------------------------------------//
@@ -65,14 +68,7 @@ namespace PROG_6221_ST10438409_Part_2
 
             //-------------------------------------------------//
             // Check if_ the user is worried about a subject
-            if (lowered.Contains("worried") 
-                || lowered.Contains("concerned") 
-                || lowered.Contains("anxious") 
-                || lowered.Contains("nervous")
-                || lowered.Contains("uneasy")
-                || lowered.Contains("apprehensive")
-                || lowered.Contains("fearful")
-                || lowered.Contains("distressed"))
+            if (lowered.Contains("worried") || lowered.Contains("concerned") || lowered.Contains("anxious"))
             {
                 return "worried";
             }
@@ -80,14 +76,7 @@ namespace PROG_6221_ST10438409_Part_2
 
             //-------------------------------------------------//
             // Check if the user is frustrated about a subject
-            if (lowered.Contains("frustrated")
-                || lowered.Contains("overwhelmed")
-                || lowered.Contains("confused")
-                || lowered.Contains("irritated")
-                || lowered.Contains("discouraged")
-                || lowered.Contains("exasperated")
-                || lowered.Contains("disheartened")
-                || lowered.Contains("agitated"))
+            if (lowered.Contains("frustrated") || lowered.Contains("overwhelmed") || lowered.Contains("confused"))
             {
                 return "frustrated";
             }
@@ -95,13 +84,7 @@ namespace PROG_6221_ST10438409_Part_2
 
             //-------------------------------------------------//
             // Check if the user is curious about a subject
-            if (lowered.Contains("curious")
-                || lowered.Contains("wondering")
-                || lowered.Contains("inquisitive")
-                || lowered.Contains("eager")
-                || lowered.Contains("inquiring")
-                || lowered.Contains("questioning")
-                || lowered.Contains("exploring"))
+            if (lowered.Contains("curious") || lowered.Contains("wondering"))
             {
                 return "curious";
             }
@@ -317,10 +300,6 @@ namespace PROG_6221_ST10438409_Part_2
                 Communication.TextToSpeech(empathyPrefix);
                 Console.WriteLine();
                 //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Continue with the program to generate a response for the user's question
-                //--------------------------------------------------//
             }
             else if (sentiment == "frustrated")
             {
@@ -331,10 +310,6 @@ namespace PROG_6221_ST10438409_Part_2
                 Communication.TextToSpeech(empathyPrefix);
                 Console.WriteLine();
                 //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Continue with the program to generate a response for the user's question
-                //--------------------------------------------------//
             }
             else if (sentiment == "curious")
             {
@@ -345,10 +320,6 @@ namespace PROG_6221_ST10438409_Part_2
                 Communication.TextToSpeech(empathyPrefix);
                 Console.WriteLine();
                 //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Continue with the program to generate a response for the user's question
-                //--------------------------------------------------//
             }
             //------------------------------------------------------------------------------------------------------------------//
 
@@ -439,8 +410,8 @@ namespace PROG_6221_ST10438409_Part_2
             // Create an Array with the list of keywords and corresponding category keys
             string[,] keywords =
             {
-                { "password", "phishing", "scam", "browsing", "browse", "personal data", "device", "threats", "privacy", "footprint","hack", "malware", "virus", "encryption", "firewall", "update", "backup" },
-                { "password_security", "phishing_scams", "phishing_scams", "safe_browsing", "safe_browsing", "personal_data_protection", "device_security", "cyber_threats", "privacy", "privacy", "cyber_threats", "cyber_threats", "cyber_threats", "privacy", "device_security", "device_security", "personal_data_protection" }
+                { "password", "phishing", "scam", "browsing", "browse", "personal data", "device", "threats", "privacy", "footprint" },
+                { "password_security", "phishing_scams", "phishing_scams", "safe_browsing", "safe_browsing", "personal_data_protection", "device_security", "cyber_threats", "privacy", "privacy" }
             };
             //-------------------------------------------------//
 
@@ -463,26 +434,16 @@ namespace PROG_6221_ST10438409_Part_2
                         //-------------------------------------------------//
                         // Get all keys in the category
                         var keys = responses[categoryKey].Keys.ToList();
+                        //-------------------------------------------------//
+
+                        //-------------------------------------------------//
+                        // Check if there are any keys available
                         var random = new Random();
+                        string selectedKey = keys[random.Next(keys.Count)];
                         //-------------------------------------------------//
 
                         //-------------------------------------------------//
-                        // Create a random number generator
-                        string selectedKey = keys
-
-                            // Try to find a close match
-                            .FirstOrDefault(k => k.ToLower().Contains(loweredMessage))
-
-                            // Try to find a close match
-                            ?? keys.FirstOrDefault(k => loweredMessage.Contains(k.ToLower()))
-
-                            // Fallback to random
-                            ?? keys[random.Next(keys.Count)];
-
-                        //-------------------------------------------------//
-
-                        //-------------------------------------------------//
-                        // Set the last question key to the selected key
+                        // Track the actual question key used
                         lastQuestionKey = selectedKey;
                         //-------------------------------------------------//
 

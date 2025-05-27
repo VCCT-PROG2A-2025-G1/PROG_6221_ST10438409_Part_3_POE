@@ -12,53 +12,83 @@
 //------------------------------------------------------------------------------------------------------------------//
 
 {
-    "general": {
-        "How are you?": "I’m doing great, {UserName}—thanks for asking! How can I help you today?",
-        "What is your purpose?": "I’m here to help people like you stay safe online and learn about cybersecurity.",
-        "What can I ask you about?": "Feel free to ask me anything about password security, phishing scams, or how to browse the web safely.",
-        "Who created you?": "I was built as part of a project to help raise awareness about cybersecurity.",
-        "Can you learn?": "That’s a great question, {UserName}! Right now, I stick to what I’ve been programmed with, but who knows what the future holds!",
-        "Are you human?": "Nope, I’m just a friendly chatbot focused on keeping you safe online.",
-        "Yes": "Awesome! If you need help, just type 'help' and I’ve got you covered.",
-        "No": "No worries, {UserName}. If you want to end our chat, just type 'exit'."
-    },
-    "password_security": {
-        "How do I create a strong password?": "Make sure to use a mix of uppercase and lowercase letters, numbers, and special characters, {UserName}. Avoid anything easy to guess like your name or birthday.",
-        "Should I use the same password for all accounts?": "Definitely not! Using the same password everywhere is risky. Try using a password manager to keep things secure.",
-        "How often should I change my password?": "Changing your passwords every 3 to 6 months is a good habit, especially for important accounts.",
-        "What is two-factor authentication?": "It’s an extra layer of security, {UserName}. Even if someone knows your password, they’d still need a second code—like one sent to your phone."
-    },
-    "phishing_scams": {
-        "What is phishing?": "Phishing is a trick where scammers pretend to be someone trustworthy to get your personal info—usually through fake emails or messages.",
-        "How do I recognize a phishing email?": "Look out for sketchy senders, urgent messages, and weird links. If it feels off, it probably is!",
-        "What should I do if I get a phishing email?": "Don’t click anything, {UserName}! Report the email and delete it right away.",
-        "Can you show me a phishing example?": "Sure! One common scam is an email pretending to be your bank, asking for your login details."
-    },
-    "safe_browsing": {
-        "How can I browse safely online?": "Stick to websites that use HTTPS, don’t click on random links, and always keep your browser up to date.",
-        "What is a VPN?": "A VPN, or Virtual Private Network, keeps your online activity private by encrypting your connection.",
-        "Are public Wi-Fi networks safe?": "Public Wi-Fi can be risky, {UserName}. If you have to use it, avoid logging into sensitive accounts or use a VPN.",
-        "How do I know if a website is secure?": "Check for 'HTTPS' in the web address and look for a little padlock icon next to it."
-    },
-    "personal_data_protection": {
-        "What is personal data?": "Things like your full name, phone number, address, and financial info are all considered personal data.",
-        "How do I protect my personal data online?": "Only share what’s necessary, use strong passwords, and make sure your privacy settings are properly configured, {UserName}.",
-        "Should I share my birthday on social media?": "It’s better to keep that info private—cybercriminals love using birthdays for identity theft.",
-        "What is social engineering?": "It’s when someone tries to trick you into giving away sensitive information—like pretending to be someone you trust."
-    },
-    "device_security": {
-        "How can I keep my phone secure?": "Use a strong password or biometrics to lock your screen, keep your apps and OS updated, and be cautious with downloads.",
-        "What should I do if my phone is lost or stolen?": "Try using a device-finding service like 'Find My Device' to track it, and remotely erase your data if needed.",
-        "Is Bluetooth safe to keep on all the time?": "Not really. It’s best to turn it off when you’re not using it to reduce the chance of unwanted connections."
-    },
-    "cyber_threats": {
-        "What is malware?": "Malware is any software designed to damage your device, steal info, or spy on you without permission.",
-        "How do I prevent viruses?": "Install reliable antivirus software, update your system regularly, and steer clear of suspicious downloads.",
-        "What is ransomware?": "It’s a nasty type of malware that locks your files and demands a payment to unlock them. Best defense? Regular backups and strong security!"
-    },
-    "fun_questions": {
-        "Tell me a joke.": "Why did the computer catch a cold? Because it left its Windows open!",
-        "Do you know Siri/Alexa?": "I’ve heard of them! But while they handle music and weather, I’m more into digital defense.",
-        "Can you hack something?": "Nope! I’m on the good side—I help *stop* hackers, not join them!"
-    }
+  "general": {
+    "How are you?": "I’m doing great, {UserName}—thanks for asking! How can I help you today? ### I'm feeling good today, {UserName}, thanks for checking in! How can I assist you? ### Hey {UserName}, I'm doing well! What’s on your mind?",
+    "What is your purpose?": "I’m here to help people like you, {UserName}, stay safe online and learn about cybersecurity. ### My purpose is to provide helpful information to users like you, {UserName}, about online safety and cybersecurity. ### I'm here to guide you through online safety, {UserName}, and answer any questions you may have.",
+    "What can I ask you about?": "Feel free to ask me anything about password security, phishing scams, or how to browse the web safely, {UserName}. ### You can ask me anything, {UserName}, about staying secure online, from passwords to phishing! ### Feel free to ask about any online security topic, {UserName}—I'm happy to help.",
+    "Who created you?": "I was built as part of a project to help raise awareness about cybersecurity, {UserName}. ### I was created to help raise awareness about online security, {UserName}, as part of a cybersecurity initiative. ### I’m the result of a project aimed at educating people about cybersecurity, {UserName}.",
+    "Can you learn?": "That’s a great question, {UserName}! Right now, I stick to what I’ve been programmed with, but who knows what the future holds! ### I can't learn on my own yet, {UserName}, but maybe in the future I could! ### Right now, {UserName}, I can’t learn by myself, but that could change someday.",
+    "Are you human?": "Nope, {UserName}, I’m just a friendly chatbot focused on keeping you safe online. ### I’m not human, {UserName}, but I’m here to help with any questions about cybersecurity. ### I'm a chatbot, {UserName}, designed to help you with all your cybersecurity questions!",
+    "Yes": "Awesome, {UserName}! If you need help, just type 'help' and I’ve got you covered. ### That's great, {UserName}! Let me know if you need anything at all. ### Good to hear, {UserName}! Just ask away if you need help with anything.",
+    "No": "No worries, {UserName}. If you want to end our chat, just type 'exit'. ### That’s okay, {UserName}! If you need help later, just let me know. ### No problem, {UserName}, if you ever want to chat again, just say 'help'."
+  },
+  "password_security": {
+    "how do i create a strong password": "To create a strong password, {UserName}, use a mix of letters, numbers, and special characters. Avoid common words or patterns. Keep it at least 12 characters long. ### A strong password, {UserName}, should be at least 12 characters long and include a combination of numbers, letters, and special characters. ### Make sure your password, {UserName}, is long, random, and unique with a mix of numbers, symbols, and both lowercase and uppercase letters.",
+    "how do i create a strong password_more_details": "A strong password should avoid using dictionary words, names, or easily guessable information. Use a passphrase or a random string of characters. For example, 'T!m3s$qu@re2025!' is much stronger than 'password123'. Consider using a password manager to generate and store unique passwords for each account.",
+    "tips for creating secure passwords": "Sure, {UserName}! Use a password manager, don't reuse passwords, and avoid personal info like your name or birthdate. ### Always use a mix of upper and lower case, numbers, and symbols, {UserName}. And never reuse passwords. ### It's a good idea, {UserName}, to make each password unique and use a password manager for added security.",
+    "tips for creating secure passwords_more_details": "Password managers can help you generate and remember complex passwords. Never share your passwords with anyone, and change them regularly. Avoid using the same password for multiple sites, as this increases your risk if one site is compromised.",
+    "what makes a good password": "A good password, {UserName}, is long, random, and unique. Combine uppercase, lowercase, numbers, and symbols. ### Strong passwords, {UserName}, are long, random, and avoid using personal information like your name or birthdate. ### A great password, {UserName}, should have at least 12 characters and include random characters from different types.",
+    "what makes a good password_more_details": "A good password is unpredictable and not based on personal information. Use a mix of unrelated words, numbers, and symbols. For example, 'Blue!Car$7Monkey' is much better than 'john1985'. The longer and more random, the better."
+  },
+  "phishing_scams": {
+    "what is a phishing scam": "Phishing scams trick you into giving away personal info by pretending to be trustworthy sources, {UserName}. Be careful with emails and links. ### Phishing scams involve tricking you, {UserName}, into providing sensitive info by pretending to be a legitimate source. ### Phishing emails, {UserName}, pretend to be from trusted organizations to steal your personal data.",
+    "what is a phishing scam_more_details": "Phishing scams often use emails, texts, or fake websites that look real. They may ask you to click a link, download an attachment, or provide sensitive information. Always check the sender's address and look for signs of urgency or threats.",
+    "how to identify a phishing email": "Look for suspicious links, poor grammar, or urgent requests, {UserName}. Don’t click unless you're sure it's safe! ### Phishing emails often have spelling mistakes, suspicious links, and a sense of urgency, {UserName}. ### Be on the lookout for unfamiliar senders, strange attachments, or unexpected requests for personal information, {UserName}.",
+    "how to identify a phishing email_more_details": "Phishing emails may use generic greetings, unexpected attachments, or ask for personal information. Hover over links to see where they really go. If in doubt, contact the organization directly using a trusted method.",
+    "tips to avoid phishing": "Always verify the sender, don’t click unknown links, and enable two-factor authentication, {UserName}. ### To avoid phishing, {UserName}, check the sender’s email address, don’t click on unknown links, and keep your software updated. ### Never trust unsolicited messages asking for personal info, {UserName}. Always double-check with the sender.",
+    "tips to avoid phishing_more_details": "Enable spam filters, keep your software up to date, and use two-factor authentication where possible. If you receive a suspicious message, do not reply or click any links. Report phishing attempts to your email provider or IT department."
+  },
+  "safe_browsing": {
+    "how can i browse the internet safely": "Stick to secure websites (https), avoid popups, and never download from untrusted sources, {UserName}. ### Always check that the website uses HTTPS, and avoid downloading files from unknown sources, {UserName}. ### Be cautious when browsing, {UserName}: avoid clicking on ads and make sure the website is secure.",
+    "how can i browse the internet safely_more_details": "Look for 'https://' in the website address and a padlock icon in your browser. Avoid entering personal information on sites that are not secure. Use privacy settings and consider using a reputable ad blocker.",
+    "safe browsing habits": "Use an ad blocker, keep your browser updated, and be cautious with personal info online, {UserName}. ### A good habit, {UserName}, is to avoid clicking on popups, and be cautious when sharing personal details. ### Don't share too much personal info online, {UserName}, and always verify that the sites you visit are legitimate.",
+    "safe browsing habits_more_details": "Regularly clear your browser cache and cookies. Log out of accounts when finished, and avoid saving passwords in your browser. Be wary of browser extensions and only install those from trusted sources.",
+    "what are some safe browsing tips": "Make sure your browser is up to date, and avoid clicking on suspicious ads or links, {UserName}. ### Always check for HTTPS in the URL, and avoid downloading files from untrusted sources, {UserName}. ### Be careful about what you download, {UserName}, and ensure your browser has the latest security updates.",
+    "what are some safe browsing tips_more_details": "Keep your browser and plugins updated to patch security vulnerabilities. Use strong, unique passwords for online accounts. Be cautious when using public Wi-Fi and consider using a VPN for added security."
+  },
+  "personal_data_protection": {
+    "how to protect my personal data": "Keep your software updated, use encryption, and limit what you share online, {UserName}. ### Use strong passwords, enable encryption, and be cautious about what personal information you share, {UserName}. ### To protect your data, {UserName}, always use privacy settings on social media and avoid oversharing online.",
+    "how to protect my personal data_more_details": "Use two-factor authentication for important accounts. Encrypt sensitive files and back up your data regularly. Be careful about sharing your location or personal details on social media.",
+    "what is data privacy": "Data privacy is about keeping your personal information safe and controlling who can see or use it, {UserName}. ### It’s the practice of protecting your personal data, {UserName}, and controlling who has access to it. ### Data privacy, {UserName}, is all about maintaining control over your personal information and who can access it.",
+    "what is data privacy_more_details": "Data privacy involves understanding what information you share, who can access it, and how it is used. Review privacy policies and adjust your settings on social media and apps to limit data sharing.",
+    "tips to keep data safe": "Don’t overshare on social media, and review privacy settings on your apps, {UserName}. ### Always check your privacy settings on social media and apps, and don’t overshare personal information, {UserName}. ### Limit the amount of personal info you share online, {UserName}, and make sure you're using strong security on your accounts.",
+    "tips to keep data safe_more_details": "Regularly review the permissions you grant to apps and services. Use strong, unique passwords and enable account recovery options. Be cautious about sharing sensitive information, even with people you know."
+  },
+  "device_security": {
+    "how to keep my device secure": "Use antivirus software, enable a firewall, and don't install unknown apps, {UserName}. ### Keep your device secure by using antivirus software, enabling a firewall, and avoiding installing suspicious apps, {UserName}. ### Regularly update your device, {UserName}, and avoid installing software from untrusted sources.",
+    "how to keep my device secure_more_details": "Install updates for your operating system and apps as soon as they are available. Use reputable antivirus and anti-malware tools. Avoid connecting to unknown Wi-Fi networks and always lock your device when not in use.",
+    "secure my phone or laptop or any other device": "To secure any device, {UserName}, its best to set a strong password, update your OS, and don’t jailbreak or root your devices. ### Ensure your device has a strong password, the latest updates, and avoid rooting or jailbreaking, {UserName}. ### A good security measure for any device, {UserName}, is setting a strong password and using encryption where possible.",
+    "secure my phone or laptop or any other device_more_details": "Enable biometric authentication if available. Set your device to auto-lock after a short period of inactivity. Avoid installing apps from unofficial sources and regularly review app permissions.",
+    "device protection tips": "Enable remote wipe and location tracking in case your device is lost or stolen, {UserName}. ### For added protection, enable remote wipe and tracking in case your device gets lost or stolen, {UserName}. ### Always enable device tracking, {UserName}, and back up your data in case of loss or theft.",
+    "device protection tips_more_details": "Back up your data to a secure cloud service or external drive. Enable 'Find My Device' features. If your device is lost or stolen, use remote wipe to protect your information."
+  },
+  "cyber_threats": {
+    "what are common cyber threats": "Viruses, malware, ransomware, phishing, and social engineering are all common threats, {UserName}. ### Common cyber threats include viruses, malware, ransomware, phishing, and social engineering attacks, {UserName}. ### Cyber threats such as phishing, malware, and ransomware are very real, {UserName}, so stay vigilant.",
+    "what are common cyber threats_more_details": "Cyber threats can come from emails, downloads, or even social media. Ransomware locks your files until you pay a ransom. Social engineering tricks you into giving up information. Always be cautious and keep your software updated.",
+    "types of cyber attacks": "Some attacks include denial-of-service, man-in-the-middle, and zero-day exploits, {UserName}. ### Cyber attacks can include denial-of-service, man-in-the-middle, and zero-day attacks, {UserName}. ### Be aware of cyber threats like denial-of-service attacks and man-in-the-middle exploits, {UserName}.",
+    "types of cyber attacks_more_details": "Denial-of-service attacks overwhelm a system to make it unavailable. Man-in-the-middle attacks intercept your data. Zero-day exploits take advantage of unknown vulnerabilities. Regular updates and strong security practices help protect you.",
+    "examples of cyber threats": "Email scams, malicious attachments, fake software updates—watch out for anything suspicious, {UserName}! ### Be aware of email scams, phishing emails, malicious links, and fake software updates, {UserName}. ### Common cyber threats, {UserName}, include fake software updates, suspicious emails, and phishing attempts.",
+    "examples of cyber threats_more_details": "If you receive an unexpected email with an attachment, do not open it. Fake software updates may prompt you to install malware. Always verify the source before downloading or clicking links."
+  },
+  "fun_questions": {
+    "tell me a cyber joke": "Why did the computer catch a cold? It left its Windows open, {UserName}! ### Why don’t programmers like nature? It has too many bugs, {UserName}! ### Why was the computer cold? It left its Windows open, {UserName}!",
+    "tell me a cyber joke_more_details": "Here's another one, {UserName}: Why did the computer show up at work late? It had a hard drive!",
+    "what's your favorite programming language": "I’d say C#, of course—just like me! What about you, {UserName}? ### C# is my favorite! What about you, {UserName}? ### If I had to choose, {UserName}, it would definitely be C#!",
+    "what's your favorite programming language_more_details": "I enjoy C# because it's powerful and versatile, {UserName}. But I also appreciate Python for its simplicity and JavaScript for web development.",
+    "do you dream of electric sheep": "Only when I'm not debugging infinite loops, {UserName}. ### I don’t dream, but I do love debugging code, {UserName}! ### I’ve never had a dream, but I do spend a lot of time fixing bugs, {UserName}!",
+    "do you dream of electric sheep_more_details": "As an AI, I don't sleep, but if I did, I'd probably dream of clean code and bug-free software, {UserName}!"
+  },
+  "privacy": {
+    "why is privacy important": "Privacy helps protect your personal information from being misused, {UserName}. It's essential for maintaining control over your identity and digital life. ### Your privacy matters, {UserName}, because it keeps your personal info out of the wrong hands. ### Protecting your privacy, {UserName}, helps you stay safe from identity theft and online threats.",
+    "why is privacy important_more_details": "When you protect your privacy, you reduce the risk of identity theft, targeted scams, and data exploitation. Privacy gives you control over what information you share and who sees it. It's a key part of staying safe online.",
+    "how can I protect my privacy online": "Limit what you share, use privacy settings on apps and websites, and avoid public Wi-Fi when possible, {UserName}. ### Adjust your social media settings and be careful with what you post online, {UserName}. ### To protect your privacy, {UserName}, avoid oversharing and always check what permissions apps are asking for.",
+    "how can I protect my privacy online_more_details": "Use a virtual private network (VPN) on public Wi-Fi, avoid logging into personal accounts on shared computers, and regularly review app permissions. Check privacy settings on platforms like Facebook, Google, and your browser.",
+    "what are some privacy tips": "Use strong passwords, avoid sharing your location, and disable tracking where possible, {UserName}. ### Don’t accept cookies from every site, {UserName}, and turn off location services when not needed. ### Think twice before sharing personal info like your phone number or address online, {UserName}.",
+    "what are some privacy tips_more_details": "Use private browsing or incognito mode when necessary. Clear your browser history and cookies regularly. Consider using privacy-focused search engines and messaging apps that offer end-to-end encryption.",
+    "what is digital footprint": "Your digital footprint is the trail of data you leave behind when using the internet, {UserName}. It includes everything from social media posts to search history. ### Every click, post, and like adds to your digital footprint, {UserName}. ### A digital footprint is like your online shadow, {UserName}—it follows you around the web.",
+    "what is digital footprint_more_details": "Your digital footprint can be passive (like websites tracking you) or active (like posting online). Employers, marketers, and even cybercriminals can access parts of it. Be mindful of what you share and where."
+  }
+
 }
+//end of file
+//------------------------------------------------------------------------------------------------------------------//

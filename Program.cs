@@ -8,8 +8,10 @@
 // <summary>
 // Imports the necessary libraries for the program to run.
 // </summary>
+using PROG_6221_ST10438409_Part_1;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -21,7 +23,7 @@ using System.Collections.Generic;
 // <summary>
 // The namespace for the program that contains the class Program.
 // </summary>
-namespace PROG_6221_ST10438409_Part_1
+namespace PROG_6221_ST10438409_Part_2
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
@@ -32,6 +34,11 @@ namespace PROG_6221_ST10438409_Part_1
         //-------------------------------------------------//
         // Declare a static variable to store the chatbot responses
         public static Dictionary<string, Dictionary<string, string>> responses;
+        //-------------------------------------------------//
+
+        //-------------------------------------------------//
+        // Delare the variables used in this class.
+        private GUI_Functions _guiFunctions = new GUI_Functions();
         //-------------------------------------------------//
 
         //------------------------------------------------------------------------------------------------------------------//
@@ -61,7 +68,7 @@ namespace PROG_6221_ST10438409_Part_1
             //-------------------------------------------------//
             // Method that display the cybersecurity-themed symbol using ASCII art
             // Question 2 - ASCII Art-*
-            ConsoleFormat.PrintBorderWithColour();
+//------------------------------------------------------------------------------------------------------------------//            ConsoleFormat.PrintBorderWithColour();
             ConsoleFormat.DisplaySymbol();
             //-------------------------------------------------//
 
@@ -170,6 +177,7 @@ namespace PROG_6221_ST10438409_Part_1
 
                     //-------------------------------------------------//
                     // Ask the user for another message
+                    Thread.Sleep(2000);
                     Communication.TextToSpeech(followUpPrompts[rnd.Next(followUpPrompts.Length)]);
                     //-------------------------------------------------//
 

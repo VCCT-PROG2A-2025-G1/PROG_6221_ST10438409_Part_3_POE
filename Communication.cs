@@ -14,6 +14,8 @@
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Speech.Synthesis;
 using System.Threading;
 //------------------------------------------------------------------------------------------------------------------//
@@ -22,7 +24,7 @@ using System.Threading;
 // <summary>
 // The namespace is used to group classes that are logically related.
 // </summary>
-namespace PROG_6221_ST10438409_Part_1
+namespace PROG_6221_ST10438409_Part_2
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
@@ -130,7 +132,7 @@ namespace PROG_6221_ST10438409_Part_1
             // Get the path to the Greeting.wav file in the project folder            
             string welcomeMessage = "Welcome to the Cybersecurity Support Chatbot!";
             Thread.Sleep(500);
-            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Greeting.wav");
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Greeting.wav");            
             //-------------------------------------------------//
 
             //-------------------------------------------------//
@@ -176,53 +178,68 @@ namespace PROG_6221_ST10438409_Part_1
         // </summary>
         public static void TextToSpeech(string v)
         {
-            //-------------------------------------------------//
-            // Create a new SpeechSynthesizer object
-            SpeechSynthesizer synth = new SpeechSynthesizer();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Set the output to the default audio device
-            synth.SetOutputToDefaultAudioDevice();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Start speaking in a new thread
-            Thread speechThread = new Thread(() => synth.SpeakAsync(v));
-            speechThread.Start();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Print the text while it's speaking
-            PrintTextWithDelay(v);
-            //-------------------------------------------------//
-        }
-
-        //------------------------------------------------------------------------------------------------------------------//
-        // <summary>
-        // This method prints text character by character with a delay.
-        // Extracted for better testability.
-        // </summary>
-        public static void PrintTextWithDelay(string text)
-        {
-            //-------------------------------------------------//
-            // print border
-            ConsoleFormat.PrintBorderWithColour();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Print the text character by character with a delay
-            Console.Write("\nChatbot: ");
-            foreach (char c in text)
+            //------------------------------------------------------------------------------------------------------------------//
+            // only run this method if_ 'v' is not null
+            if(v != null)
             {
-                Console.Write(c);
-                Thread.Sleep(50);
+                //-------------------------------------------------//
+                // Print border and label first
+                ConsoleFormat.PrintBorderWithColour();
+                Console.Write("\nChatbot: ");
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // This method uses the System.Speech.Synthesis namespace to convert text to speech
+                using (SpeechSynthesizer synth = new SpeechSynthesizer())
+                {
+                    //-------------------------------------------------//
+                    // Set the voice to the default system voice
+                    synth.SetOutputToDefaultAudioDevice();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Set the rate of speech
+                    int charIndex = 0;
+                    synth.SpeakProgress += (sender, e) =>
+                    {
+                        //-------------------------------------------------//
+                        // Print the next chunk of text as it's spoken
+                        while (charIndex < e.CharacterPosition + e.CharacterCount && charIndex < v.Length)
+                        {
+                            //-------------------------------------------------//
+                            // Print the next character
+                            Console.Write(v[charIndex]);
+                            charIndex++;
+                            //-------------------------------------------------//
+                        }
+                        //-------------------------------------------------//
+                    };
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Speak synchronously (blocks until done to prevent voice overlap)
+
+                    synth.Speak(v);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Print any remaining characters
+                    while (charIndex < v.Length)
+                    {
+                        //-------------------------------------------------//
+                        Console.Write(v[charIndex]);
+                        charIndex++;
+                        //-------------------------------------------------//
+                    }
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+
+                Thread.Sleep(1000);
             }
-            //-------------------------------------------------//
-            Thread.Sleep(1000);
+            //------------------------------------------------------------------------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//
-
 
     }
     //------------------------------------------------------------------------------------------------------------------//

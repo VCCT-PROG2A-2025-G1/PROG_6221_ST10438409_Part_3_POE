@@ -20,7 +20,7 @@ using System;
 // <summary>
 // The namespace is used to group classes that are logically related.
 // </summary>
-namespace PROG_6221_ST10438409_Part_1
+namespace PROG_6221_ST10438409_Part_2
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
