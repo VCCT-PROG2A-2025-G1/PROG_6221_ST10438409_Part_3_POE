@@ -1,0 +1,24 @@
+name: Build Check (.NET Framework)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Restore NuGet packages
+      run: nuget restore PROG_6221_ST10438409_Part_3_POE.sln
+
+    - name: Build Solution
+      run: msbuild PROG_6221_ST10438409_Part_3_POE.sln /p:Configuration=Release
