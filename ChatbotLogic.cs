@@ -16,6 +16,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -278,6 +279,64 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
+        // This method checks if the user wants to create a task and opens the Task Assistant GUI if so.
+        // </summary>
+        public static bool Check_TaskAssistant(string userMessage, MainWindow mainWindow)
+        {
+            //-------------------------------------------------//
+            // Check if the user message contains "create" and "task"
+            if (userMessage.ToLower().Contains("create") && userMessage.ToLower().Contains("task"))
+            {
+                //-------------------------------------------------//
+                // close the main window
+                mainWindow.Dispose();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // If the user wants to create a task, open the Task Assistant GUI
+                TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
+                taskAssistantGUI.ShowDialog();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the chatbot output to an empty string
+                return true;
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // If the user message does not contain "create" and "task", do nothing
+            if((userMessage.ToLower().Contains("show") && userMessage.ToLower().Contains("task")) || (userMessage.ToLower().Contains("display") && userMessage.ToLower().Contains("task")))
+            {
+                //-------------------------------------------------//
+                // close the main window
+                mainWindow.Dispose();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Open the Display Window
+                TaskAssistant taskAssistant = new TaskAssistant();
+                taskAssistant.DisplayAllTasks();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the chatbot output to an empty string
+                return true;
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+
+            //-------------------------------------------------//
+            // else return false
+            return false;
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
         // Searches for the user's message in the response dictionary and returns the chatbot's response.
         // Includes "general" category in both exact match and keyword fallback logic.
         // Randomly selects from multiple responses separated by "###".
@@ -286,6 +345,14 @@ namespace PROG_6221_ST10438409_Part_3_POE
         public static async Task<string> GetResponse(string message, string userName, MainWindow mainWindow)
         {
             responses = LoadResponses();
+
+            //-------------------------------------------------//
+            //check task assistant
+            if (Check_TaskAssistant(message, mainWindow))
+            {
+                return null;
+            }
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             // Convert message to lowercase for case-insensitive matching

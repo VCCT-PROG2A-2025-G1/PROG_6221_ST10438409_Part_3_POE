@@ -36,6 +36,7 @@
             this.lblCybersecurityChatbot = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblErrorMessage = new System.Windows.Forms.Label();
+            this.lblExplain = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // splitter1
@@ -112,11 +113,22 @@
             this.lblErrorMessage.TabIndex = 7;
             this.lblErrorMessage.Text = "Error Message";
             // 
+            // lblExplain
+            // 
+            this.lblExplain.AutoSize = true;
+            this.lblExplain.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblExplain.Location = new System.Drawing.Point(406, 37);
+            this.lblExplain.Name = "lblExplain";
+            this.lblExplain.Size = new System.Drawing.Size(196, 13);
+            this.lblExplain.TabIndex = 8;
+            this.lblExplain.Text = "Enter Your Message in the Block below:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblExplain);
             this.Controls.Add(this.lblErrorMessage);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.lblCybersecurityChatbot);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Label lblCybersecurityChatbot;
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblErrorMessage;
+        private System.Windows.Forms.Label lblExplain;
     }
 }
