@@ -1,0 +1,64 @@
+//------------------------------------------------------------------------------------------------------------------//
+// Name: Dylan Shortt
+// Group: 1
+// Student Number: ST-10438409
+//------------------------------------------------------------------------------------------------------------------//
+
+//------------------------------------------------------------------------------------------------------------------//
+// Reference: 
+// General and fun_questions I created myself.
+// Password_security, phishing_scams, safe_browsing, personal_data_protection, device_security, and cyber_threats were created with the help of ChatGPT.
+// GitHub Copilot. (2025). AI programming assistant. [online] Available at: https://copilot.github.com/ [Accessed: 2025].
+//------------------------------------------------------------------------------------------------------------------//
+
+{
+    "general": {
+        "How are you?": "I’m doing great, {UserName}—thanks for asking! How can I help you today?",
+        "What is your purpose?": "I’m here to help people like you stay safe online and learn about cybersecurity.",
+        "What can I ask you about?": "Feel free to ask me anything about password security, phishing scams, or how to browse the web safely.",
+        "Who created you?": "I was built as part of a project to help raise awareness about cybersecurity.",
+        "Can you learn?": "That’s a great question, {UserName}! Right now, I stick to what I’ve been programmed with, but who knows what the future holds!",
+        "Are you human?": "Nope, I’m just a friendly chatbot focused on keeping you safe online.",
+        "Yes": "Awesome! If you need help, just type 'help' and I’ve got you covered.",
+        "No": "No worries, {UserName}. If you want to end our chat, just type 'exit'."
+    },
+    "password_security": {
+        "How do I create a strong password?": "Make sure to use a mix of uppercase and lowercase letters, numbers, and special characters, {UserName}. Avoid anything easy to guess like your name or birthday.",
+        "Should I use the same password for all accounts?": "Definitely not! Using the same password everywhere is risky. Try using a password manager to keep things secure.",
+        "How often should I change my password?": "Changing your passwords every 3 to 6 months is a good habit, especially for important accounts.",
+        "What is two-factor authentication?": "It’s an extra layer of security, {UserName}. Even if someone knows your password, they’d still need a second code—like one sent to your phone."
+    },
+    "phishing_scams": {
+        "What is phishing?": "Phishing is a trick where scammers pretend to be someone trustworthy to get your personal info—usually through fake emails or messages.",
+        "How do I recognize a phishing email?": "Look out for sketchy senders, urgent messages, and weird links. If it feels off, it probably is!",
+        "What should I do if I get a phishing email?": "Don’t click anything, {UserName}! Report the email and delete it right away.",
+        "Can you show me a phishing example?": "Sure! One common scam is an email pretending to be your bank, asking for your login details."
+    },
+    "safe_browsing": {
+        "How can I browse safely online?": "Stick to websites that use HTTPS, don’t click on random links, and always keep your browser up to date.",
+        "What is a VPN?": "A VPN, or Virtual Private Network, keeps your online activity private by encrypting your connection.",
+        "Are public Wi-Fi networks safe?": "Public Wi-Fi can be risky, {UserName}. If you have to use it, avoid logging into sensitive accounts or use a VPN.",
+        "How do I know if a website is secure?": "Check for 'HTTPS' in the web address and look for a little padlock icon next to it."
+    },
+    "personal_data_protection": {
+        "What is personal data?": "Things like your full name, phone number, address, and financial info are all considered personal data.",
+        "How do I protect my personal data online?": "Only share what’s necessary, use strong passwords, and make sure your privacy settings are properly configured, {UserName}.",
+        "Should I share my birthday on social media?": "It’s better to keep that info private—cybercriminals love using birthdays for identity theft.",
+        "What is social engineering?": "It’s when someone tries to trick you into giving away sensitive information—like pretending to be someone you trust."
+    },
+    "device_security": {
+        "How can I keep my phone secure?": "Use a strong password or biometrics to lock your screen, keep your apps and OS updated, and be cautious with downloads.",
+        "What should I do if my phone is lost or stolen?": "Try using a device-finding service like 'Find My Device' to track it, and remotely erase your data if needed.",
+        "Is Bluetooth safe to keep on all the time?": "Not really. It’s best to turn it off when you’re not using it to reduce the chance of unwanted connections."
+    },
+    "cyber_threats": {
+        "What is malware?": "Malware is any software designed to damage your device, steal info, or spy on you without permission.",
+        "How do I prevent viruses?": "Install reliable antivirus software, update your system regularly, and steer clear of suspicious downloads.",
+        "What is ransomware?": "It’s a nasty type of malware that locks your files and demands a payment to unlock them. Best defense? Regular backups and strong security!"
+    },
+    "fun_questions": {
+        "Tell me a joke.": "Why did the computer catch a cold? Because it left its Windows open!",
+        "Do you know Siri/Alexa?": "I’ve heard of them! But while they handle music and weather, I’m more into digital defense.",
+        "Can you hack something?": "Nope! I’m on the good side—I help *stop* hackers, not join them!"
+    }
+}
