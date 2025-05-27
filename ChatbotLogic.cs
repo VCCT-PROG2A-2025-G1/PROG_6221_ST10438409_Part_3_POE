@@ -20,13 +20,14 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
 // <summary>
 // The namespace is used to group classes that are logically related.
 // </summary>
-namespace PROG_6221_ST10438409_Part_2
+namespace PROG_6221_ST10438409_Part_3_POE
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
@@ -182,7 +183,7 @@ namespace PROG_6221_ST10438409_Part_2
 
                     //-------------------------------------------------//
                     // Set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
+                     
                     string confirmation;
                     //-------------------------------------------------//
 
@@ -219,7 +220,7 @@ namespace PROG_6221_ST10438409_Part_2
         //------------------------------------------------------------------------------------------------------------------//
         // Helper method to detect confusion or follow-up requests
         // This method was assistedby Copilot, I used it to create the list of triggers
-        public static bool IsConfusionOrFollowUp(string message)
+        public static async Task<bool> IsConfusionOrFollowUp(string message, MainWindow mainWindow)
         {
             //-------------------------------------------------//
             // Check if the message is null or empty
@@ -258,9 +259,8 @@ namespace PROG_6221_ST10438409_Part_2
                 if (lowered.Contains(trigger))
                 {
                     // set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
                     Communication.TextToSpeech("I see, no worries at all, I'll be happy to explain in further detail.");
-                    Console.WriteLine();
+                    await mainWindow.TypeTextToChatbotOutputAsync("I see, no worries at all, I'll be happy to explain in further detail.");
                     Thread.Sleep(3100);
 
                     return true;
@@ -268,6 +268,7 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
             }
             //-------------------------------------------------//
+
             //-------------------------------------------------//
             // If no triggers are found, return false
             return false;
@@ -282,7 +283,7 @@ namespace PROG_6221_ST10438409_Part_2
         // Randomly selects from multiple responses separated by "###".
         // Copilot assisted in creating this method.
         // </summary>
-        public static string GetResponse(string message, string userName)
+        public static async Task<string> GetResponse(string message, string userName, MainWindow mainWindow)
         {
             responses = LoadResponses();
 
@@ -313,9 +314,9 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
                 empathyPrefix = "It's completely understandable to feel that way. Cybersecurity can be scary, but feel free to ask me any questions you might have! Let me see if I can help you feel better";
                 //set the colour to the chatbot
-                ConsoleFormat.SwitchTextColour(0);
+                 
                 Communication.TextToSpeech(empathyPrefix);
-                Console.WriteLine();
+                await mainWindow.TypeTextToChatbotOutputAsync(empathyPrefix);
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
@@ -327,9 +328,9 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
                 empathyPrefix = "I understand this can be frustrating. Cybersecurity can feel overwhelming, but I'm always here to help. ";
                 //set the colour to the chatbot
-                ConsoleFormat.SwitchTextColour(0);
+                 
                 Communication.TextToSpeech(empathyPrefix);
-                Console.WriteLine();
+                await mainWindow.TypeTextToChatbotOutputAsync(empathyPrefix);
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
@@ -341,9 +342,9 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
                 empathyPrefix = "Curiosity is great! Learning more about cybersecurity in general is always a good idea. ";
                 //set the colour to the chatbot
-                ConsoleFormat.SwitchTextColour(0);
+                 
                 Communication.TextToSpeech(empathyPrefix);
-                Console.WriteLine();
+                await mainWindow.TypeTextToChatbotOutputAsync(empathyPrefix);
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
@@ -354,7 +355,7 @@ namespace PROG_6221_ST10438409_Part_2
 
             //------------------------------------------------------------------------------------------------------------------//
             // check if the message is a confusion or follow-up request
-            if (IsConfusionOrFollowUp(loweredMessage) && !string.IsNullOrEmpty(lastQuestionKey))
+            if (await IsConfusionOrFollowUp(loweredMessage, mainWindow) && !string.IsNullOrEmpty(lastQuestionKey))
             {
                 //-------------------------------------------------//
                 // Try to find a "more details" response for the last topic
@@ -521,42 +522,10 @@ namespace PROG_6221_ST10438409_Part_2
             if (responses.ContainsKey("general"))
             {
                 //-------------------------------------------------//
-                // Get a random response from the general category
-                var generalResponses = responses["general"].Values.ToList();
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Check if there are any responses available
-                if (generalResponses.Count > 0)
-                {
-                    //-------------------------------------------------//
-                    // Pick a random response from the general category
-                    var random = new Random();
-                    string rawResponse = generalResponses[random.Next(generalResponses.Count)];
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Split the response by "###" and pick a random one
-                    string[] possibleResponses = rawResponse.Split(new string[] { "###" }, StringSplitOptions.None);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Pick a random response from the possible responses
-                    string chosenResponse = possibleResponses[random.Next(possibleResponses.Length)];
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Return the personalized response
-                    return chosenResponse.Replace("{UserName}", userName);
-                    //-------------------------------------------------//
-                }
+                // Get the general category responses
+                return "I'm sorry, I couldn't find an answer to your question.";
                 //-------------------------------------------------//
             }
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
             //-------------------------------------------------//
 
             //-------------------------------------------------//
@@ -593,11 +562,6 @@ namespace PROG_6221_ST10438409_Part_2
             else
             {
                 //-------------------------------------------------//
-                //set the colour to the chatbot
-                ConsoleFormat.SwitchTextColour(0);
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
                 // Display an error message if the file is not found
                 Communication.TextToSpeech("Error: response.json file not found!");
                 //-------------------------------------------------//
@@ -615,48 +579,47 @@ namespace PROG_6221_ST10438409_Part_2
         // <summary>
         // List questions based on user selection of category or all available questions.
         // </summary>
-        public static void ListPossibleQuestions()
+        public static async Task ListPossibleQuestions(MainWindow mainWindow)
         {
-            responses = LoadResponses();
             //-------------------------------------------------//
-            // Set the chatbot text color
-            ConsoleFormat.SwitchTextColour(0);
+            // Load the responses from the JSON file
+            responses = LoadResponses();
             //-------------------------------------------------//
 
             //-------------------------------------------------//
+            string fullMessage = "";
             string choice;
             bool validChoice = false;
             //-------------------------------------------------//
 
             //-------------------------------------------------//
             // Ask if the user wants to see questions by category or all questions
-            Communication.TextToSpeech("Would you like to see questions for a specific category or all available questions?");
-            Console.WriteLine("\n1. View questions by category");
-            Console.WriteLine("2. View all questions");
-            Console.Write("\nPlease enter your choice (1 or 2): ");
+            string prompt = "Would you like to see questions for a specific category or all available questions?\n1. View questions by category\n2. View all questions\nPlease enter your choice (1 or 2): ";
+            Communication.TextToSpeech(prompt);
+            await mainWindow.TypeTextToChatbotOutputAsync(prompt);
             //-------------------------------------------------//
 
             while (!validChoice)
             {
                 //-------------------------------------------------//
-                // Set user text color
-                ConsoleFormat.SwitchTextColour(1);
+                // Get the input from the user
+                choice = await mainWindow.GetUserInputAsync();
                 //-------------------------------------------------//
 
-                choice = Console.ReadLine()?.Trim();
-                Console.WriteLine();
                 //-------------------------------------------------//
                 // Check if the user entered a valid choice
                 if (choice == "1")
                 {
+                    //-------------------------------------------------//
+                    // User chose to view questions by category
                     validChoice = true;
+                    //-------------------------------------------------//
 
                     //-------------------------------------------------//
                     // List available categories
-                    ConsoleFormat.SwitchTextColour(0);
-                    ConsoleFormat.PrintBorderWithColour();
+                    prompt = "Here are the available categories:\n";
+                    fullMessage = prompt;
                     Communication.TextToSpeech("Here are the available categories:");
-                    Console.WriteLine();
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
@@ -664,26 +627,30 @@ namespace PROG_6221_ST10438409_Part_2
                     int index = 1;
                     foreach (var category in responses.Keys)
                     {
-                        Console.WriteLine($"{index}. {category.Replace('_', ' ')}");
+                        fullMessage += "\n" + index + ". " + category;
                         index++;
                     }
-                    ConsoleFormat.PrintBorderWithColour();
-                    ConsoleFormat.PrintBorderWithColour();
-                    Console.WriteLine();
-                    Console.Write("\nPlease enter the category number: ");
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
-                    // Set user text color
-                    ConsoleFormat.SwitchTextColour(1);
+                    // Ask the user to select a category
+                    Communication.TextToSpeech("Please enter the category number to see the questions: ");
+                    fullMessage += ("\nPlease enter the category number to see the questions: ");
                     //-------------------------------------------------//
 
+                    //-------------------------------------------------//
+                    // Display the categories in the chatbot output
+                    await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Set validCategory to false to start the loop for category selection
                     bool validCategory = false;
                     while (!validCategory)
                     {
                         //-------------------------------------------------//
                         // Read user input and validate the category selection
-                        if (int.TryParse(Console.ReadLine()?.Trim(), out int categoryChoice) && categoryChoice > 0 && categoryChoice <= responses.Keys.Count)
+                        if (int.TryParse(await mainWindow.GetUserInputAsync(), out int categoryChoice) && categoryChoice > 0 && categoryChoice <= responses.Keys.Count)
                         {
                             //-------------------------------------------------//
                             // Set the selected category
@@ -693,48 +660,46 @@ namespace PROG_6221_ST10438409_Part_2
 
                             //-------------------------------------------------//
                             // Display questions from the selected category
-                            ConsoleFormat.SwitchTextColour(0);
-                            ConsoleFormat.PrintBorderWithColour();
                             Communication.TextToSpeech($"Here are the questions in {selectedCategory.Replace('_', ' ')}:");
-                            Console.WriteLine();
+                            fullMessage = ($"Here are the questions in {selectedCategory.Replace('_', ' ')}:") + "\n";
                             //-------------------------------------------------//
 
                             //-------------------------------------------------//
                             // Loop through and display the questions
                             foreach (var key in responses[selectedCategory].Keys)
                             {
-                                Console.WriteLine(key);
+                                fullMessage += (key) + "\n";
                             }
-                            ConsoleFormat.PrintBorderWithColour();
+                            //-------------------------------------------------//
+
+                            //-------------------------------------------------//
+                            // Display the questions in the chatbot output
+                            await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
                             //-------------------------------------------------//
                         }
                         else
                         {
                             //-------------------------------------------------//
-                            // Invalid category choice, prompt again
-                            ConsoleFormat.SwitchTextColour(0);
+                            // Invalid category choice, prompt again                             
                             Communication.TextToSpeech("Invalid choice. Please enter a valid category number.");
-                            Console.Write("\nPlease enter the category number: ");
-                            //-------------------------------------------------//
-
-                            //-------------------------------------------------//
-                            // Set user text color
-                            ConsoleFormat.SwitchTextColour(1);
+                            mainWindow.ChangeErrorMessage("\nPlease enter the category number: ");
                             //-------------------------------------------------//
                         }
+                        //-------------------------------------------------//
                     }
+                    //-------------------------------------------------//
                 }
                 else if (choice == "2")
                 {
+                    //-------------------------------------------------//
+                    // User chose to view all questions
                     validChoice = true;
+                    //-------------------------------------------------//
 
                     //-------------------------------------------------//
                     // Display all questions
-                    ConsoleFormat.SwitchTextColour(0);
-                    ConsoleFormat.PrintBorderWithColour();
-                    Console.WriteLine();
                     Communication.TextToSpeech("Here are all the questions you can ask:");
-                    Console.WriteLine();
+                    fullMessage = ("Here are all the questions you can ask:");
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
@@ -745,39 +710,38 @@ namespace PROG_6221_ST10438409_Part_2
                         // Loop through and display the questions
                         foreach (var key in category.Keys)
                         {
-                            Console.WriteLine(key);
+                            fullMessage += "\n" + (key);
                         }
                         //-------------------------------------------------//
                     }
-                    ConsoleFormat.PrintBorderWithColour();
                     //-------------------------------------------------//
                 }
                 else
                 {
                     //-------------------------------------------------//
-                    // Invalid input, retry
-                    ConsoleFormat.SwitchTextColour(0);
+                    // Invalid input, retry                     
                     Communication.TextToSpeech("Invalid choice. Please enter 1 or 2: ");
-                    ConsoleFormat.SwitchTextColour(0);
+                     await mainWindow.TypeTextToChatbotOutputAsync("Invalid choice. Please enter 1 or 2: ");
                     //-------------------------------------------------//
                 }
+                //-------------------------------------------------//
             }
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             // Ask the user for another message
             Thread.Sleep(2000);
             Communication.TextToSpeech("How else can I help you today: ");
+            fullMessage += "\n\n\n" + ("How else can I help you today: ");
             //-------------------------------------------------//
 
             //-------------------------------------------------//
-            // Set user text color
-            ConsoleFormat.SwitchTextColour(1);
-            //-------------------------------------------------//
+            // Display the questions in the chatbot output
+            mainWindow.SetChatbotOutput(fullMessage);
+            //-------------------------------------------------/
         }
         //------------------------------------------------------------------------------------------------------------------//
-
     }
     //------------------------------------------------------------------------------------------------------------------//
-
 }
 //-----------------------------------...ooo000 END OF FILE 000ooo...-----------------------------------//

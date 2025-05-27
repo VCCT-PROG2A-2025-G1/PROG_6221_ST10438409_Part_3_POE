@@ -58,7 +58,18 @@
     <Compile Include="FirstLoadingScreen.Designer.cs">
       <DependentUpon>FirstLoadingScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI_Functions.cs" />
+    <Compile Include="GetUsername.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetUsername.Designer.cs">
+      <DependentUpon>GetUsername.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +89,12 @@
   <ItemGroup>
     <EmbeddedResource Include="FirstLoadingScreen.resx">
       <DependentUpon>FirstLoadingScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetUsername.resx">
+      <DependentUpon>GetUsername.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

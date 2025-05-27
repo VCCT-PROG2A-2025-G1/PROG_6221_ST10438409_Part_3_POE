@@ -14,17 +14,19 @@
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
 using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Speech.Synthesis;
 using System.Threading;
+using System.Threading.Tasks;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
 // <summary>
 // The namespace is used to group classes that are logically related.
 // </summary>
-namespace PROG_6221_ST10438409_Part_2
+namespace PROG_6221_ST10438409_Part_3_POE
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
@@ -32,6 +34,67 @@ namespace PROG_6221_ST10438409_Part_2
     // </summary>
     public class Communication
     {
+        //-------------------------------------------------//
+        // Declare a static variable to store the chatbot responses
+        private static readonly ConcurrentQueue<string> speechQueue = new ConcurrentQueue<string>();
+        private static bool isSpeaking = false;
+        private static readonly object lockObj = new object();
+        //-------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
+        // This method is used to add a string to the speech queue and start the speech queue if it is not already running.
+        // This method was created to handle the text-to-speech functionality in a thread-safe manner.
+        // This method contains code from Copilot.
+        // </summary>
+        private static void StartSpeechQueue()
+        {
+            //-------------------------------------------------//
+            // Check if the speech queue is already running
+            lock (lockObj)
+            {
+                //-------------------------------------------------//
+                // If it is already speaking, do not start again
+                if (isSpeaking) return;
+                isSpeaking = true;
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Start a new task to process the speech queue
+            Task.Run(() =>
+            {
+                //-------------------------------------------------//
+                // Process the speech queue until it is empty
+                while (speechQueue.TryDequeue(out string text))
+                {
+                    //-------------------------------------------------//
+                    // Create a new SpeechSynthesizer instance and set the output to the default audio device
+                    using (SpeechSynthesizer synth = new SpeechSynthesizer())
+                    {
+                        //-------------------------------------------------//
+                        // Set the output to the default audio device
+                        synth.SetOutputToDefaultAudioDevice();
+                        synth.Speak(text);
+                        //-------------------------------------------------//
+                    }
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+                // After processing the queue, set isSpeaking to false
+                lock (lockObj)
+                {
+                    //-------------------------------------------------//
+                    // Indicate that the speech queue is no longer speaking
+                    isSpeaking = false;
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+            });
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
 
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
@@ -40,73 +103,26 @@ namespace PROG_6221_ST10438409_Part_2
         public static string GetUserName()
         {
             //-------------------------------------------------//
+            GetUsername getUsernameForm = new GetUsername();
+            getUsernameForm.ShowDialog();
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Close the FirstLoadingScreen form before the user has entered their name
+            FirstLoadingScreen screen = new FirstLoadingScreen();
+            screen.Close();
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
             // Declare a string variable to store the user's name
             string userName;
             string message;
             //-------------------------------------------------//
 
             //-------------------------------------------------//
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
+            // Get the username from the Username form
+            userName = GetUsername.Username;
             //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Ask the user for their name
-            message = "Welcome user, please enter your name: ";
-            Communication.TextToSpeech(message);
-
-            //-------------------------------------------------//
-            //set the colour to the user
-            ConsoleFormat.SwitchTextColour(1);
-            //-------------------------------------------------//
-
-            userName = Console.ReadLine();
-            ConsoleFormat.PrintBorderWithColour();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Check if the user entered a name
-            while (string.IsNullOrWhiteSpace(userName))
-            {
-                //-------------------------------------------------//
-                //set the colour to the chatbot
-                ConsoleFormat.SwitchTextColour(0);
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Ask the user for their name again if they didn't enter anything
-                message = "Please enter your name: ";
-                Communication.TextToSpeech(message);
-
-                //-------------------------------------------------//
-                //set the colour to the user
-                ConsoleFormat.SwitchTextColour(1);
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                userName = Console.ReadLine();
-                ConsoleFormat.PrintBorderWithColour();
-                //-------------------------------------------------//
-            }
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Display the user's name
-            message = $"Hello {userName}, it's nice to meet you!\nNow how can I assist you today?";
-            Communication.TextToSpeech(message);
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //set the colour to the user
-            ConsoleFormat.SwitchTextColour(1);
-            //-------------------------------------------------//
-
-            Console.Write("\nYou: ");
 
             //-------------------------------------------------//
             // Return the user's name
@@ -124,14 +140,7 @@ namespace PROG_6221_ST10438409_Part_2
         public static void FirstGreeting()
         {
             //-------------------------------------------------//
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
             // Get the path to the Greeting.wav file in the project folder            
-            string welcomeMessage = "Welcome to the Cybersecurity Support Chatbot!";
-            Thread.Sleep(500);
             string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Greeting.wav");            
             //-------------------------------------------------//
 
@@ -142,7 +151,13 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
                 // Play the Greeting.wav file
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(filePath);
-                player.PlaySync();
+                player.Play();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Method that display the cybersecurity-themed symbol using ASCII art
+                FirstLoadingScreen screen = new FirstLoadingScreen();
+                screen.ShowDialog();
                 //-------------------------------------------------//
             }
             else
@@ -150,23 +165,9 @@ namespace PROG_6221_ST10438409_Part_2
                 //-------------------------------------------------//
                 // Display an error message if the file is not found
                 Console.WriteLine("Greeting.wav file not found.");
-                Console.Beep(800, 300);
-                Console.Beep(600, 300);
-                Console.Beep(400, 300);
                 //-------------------------------------------------//
             }
             //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //Call TextToSpeech method to convert the welcome message to speech            
-            Communication.TextToSpeech(welcomeMessage);
-            //-------------------------------------------------//
-            Thread.Sleep(1000);
         }
         //------------------------------------------------------------------------------------------------------------------//
 
@@ -183,59 +184,25 @@ namespace PROG_6221_ST10438409_Part_2
             if(v != null)
             {
                 //-------------------------------------------------//
-                // Print border and label first
-                ConsoleFormat.PrintBorderWithColour();
-                Console.Write("\nChatbot: ");
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // This method uses the System.Speech.Synthesis namespace to convert text to speech
-                using (SpeechSynthesizer synth = new SpeechSynthesizer())
+                // Check if the string is null or whitespace before adding it to the queue
+                if (string.IsNullOrWhiteSpace(v))
                 {
                     //-------------------------------------------------//
-                    // Set the voice to the default system voice
-                    synth.SetOutputToDefaultAudioDevice();
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Set the rate of speech
-                    int charIndex = 0;
-                    synth.SpeakProgress += (sender, e) =>
-                    {
-                        //-------------------------------------------------//
-                        // Print the next chunk of text as it's spoken
-                        while (charIndex < e.CharacterPosition + e.CharacterCount && charIndex < v.Length)
-                        {
-                            //-------------------------------------------------//
-                            // Print the next character
-                            Console.Write(v[charIndex]);
-                            charIndex++;
-                            //-------------------------------------------------//
-                        }
-                        //-------------------------------------------------//
-                    };
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Speak synchronously (blocks until done to prevent voice overlap)
-
-                    synth.Speak(v);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Print any remaining characters
-                    while (charIndex < v.Length)
-                    {
-                        //-------------------------------------------------//
-                        Console.Write(v[charIndex]);
-                        charIndex++;
-                        //-------------------------------------------------//
-                    }
+                    // If the string is null or whitespace, do not add it to the queue
+                    return;
                     //-------------------------------------------------//
                 }
                 //-------------------------------------------------//
 
-                Thread.Sleep(1000);
+                //-------------------------------------------------//
+                // Add the string to the speech queue
+                speechQueue.Enqueue(v);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Start the speech queue if it is not already running
+                StartSpeechQueue();
+                //-------------------------------------------------//
             }
             //------------------------------------------------------------------------------------------------------------------//
         }

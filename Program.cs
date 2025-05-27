@@ -8,10 +8,11 @@
 // <summary>
 // Imports the necessary libraries for the program to run.
 // </summary>
-using PROG_6221_ST10438409_Part_1;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -23,7 +24,7 @@ using System.Threading;
 // <summary>
 // The namespace for the program that contains the class Program.
 // </summary>
-namespace PROG_6221_ST10438409_Part_2
+namespace PROG_6221_ST10438409_Part_3_POE
 {
     //------------------------------------------------------------------------------------------------------------------//
     // <summary>
@@ -37,8 +38,19 @@ namespace PROG_6221_ST10438409_Part_2
         //-------------------------------------------------//
 
         //-------------------------------------------------//
-        // Delare the variables used in this class.
-        private GUI_Functions _guiFunctions = new GUI_Functions();
+        // Declare a string variable to store the user's name
+        // This variable will be used to personalize the chatbot's responses
+        // It will have a getter to allow access from other classes
+        public static string userName;
+        //-------------------------------------------------//
+
+        //-------------------------------------------------//
+        // Get the user's name
+        public static string UserName
+        {
+            get { return userName; }
+            set { userName = value; }
+        }
         //-------------------------------------------------//
 
         //------------------------------------------------------------------------------------------------------------------//
@@ -49,12 +61,33 @@ namespace PROG_6221_ST10438409_Part_2
         {
 
             //-------------------------------------------------//
-            // Declare a string variable to store the user's name
-            string userName;
+            // Question 1 - Audio Greeting            
+            Communication.FirstGreeting();
+            //-------------------------------------------------//   
+
+            //-------------------------------------------------//
+            // Method that asks the user for their name and stores it in the userName variable
+            // Question 3 - User Interaction 
+            userName = Communication.GetUserName();
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Display the Main Window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.ShowDialog();
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
+        // Main method of the project that runs the other methods in the solution.
+        // </summary>
+        public static async Task RunAsync(string userMessage, MainWindow mainWindow)
+        {
+            //-------------------------------------------------//
             // Load chatbot responses from JSON file
             responses = ChatbotLogic.LoadResponses();
-            // Declare a string variable to store the user's message
-            string userMessage;
             // Random follow-up prompts to keep the conversation going
             string[] followUpPrompts = {
                             "Anything else you'd like to ask?",
@@ -65,137 +98,62 @@ namespace PROG_6221_ST10438409_Part_2
             Random rnd = new Random();
             //-------------------------------------------------//
 
-            //-------------------------------------------------//
-            // Method that display the cybersecurity-themed symbol using ASCII art
-            // Question 2 - ASCII Art-*
-//------------------------------------------------------------------------------------------------------------------//            ConsoleFormat.PrintBorderWithColour();
-            ConsoleFormat.DisplaySymbol();
-            //-------------------------------------------------//
+            //------------------------------------------------------------------------------------------------------------------//
 
             //-------------------------------------------------//
-            //method that calls the Greeting method that welcomes the user
-            //set the colour to the chatbot
-            ConsoleFormat.SwitchTextColour(0);
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Question 1 - Audio Greeting            
-            Communication.FirstGreeting();
-            Console.WriteLine();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//    
-
-            //-------------------------------------------------//
-            // Method that asks the user for their name and stores it in the userName variable
-            // Question 3 - User Interaction 
-            userName = Communication.GetUserName();
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Question 4 - Chatbot Basic Interaction
-            // Loop that runs until the user types "exit"
-            do
+            // Check if the user wants to exit
+            if (userMessage.ToLower() == "exit")
             {
                 //-------------------------------------------------//
-                // Get the user's message
-                userMessage = Console.ReadLine().Trim();
-                Console.WriteLine();
-                ConsoleFormat.PrintBorderWithColour();
+                // Call TextToSpeech method to convert the goodbye message to speech
+                Communication.TextToSpeech("Goodbye " + userName + ", have a great day!\n");
+                await mainWindow.TypeTextToChatbotOutputAsync("Goodbye " + userName + ", have a great day!\n");                
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
-                // Check if the user's message is empty
-                if (string.IsNullOrWhiteSpace(userMessage))
-                {
-                    //-------------------------------------------------//
-                    //set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
-                    //-------------------------------------------------//
+                //end the program
+                Environment.Exit(0);
+                //-------------------------------------------------//
+            }
+            else if (userMessage.ToLower() == "help")
+            {
+                //-------------------------------------------------//
+                // Print every possible question
+                await ChatbotLogic.ListPossibleQuestions(mainWindow);
+                //-------------------------------------------------//
+            }
+            else
+            {
+                //-------------------------------------------------//
+                // Print the user's message to the chatbot output
+                string fullMessage = "";
 
-                    //-------------------------------------------------//
-                    Communication.TextToSpeech("Please enter a valid message.\n");
-                    ConsoleFormat.PrintBorderWithColour();
-                    ConsoleFormat.PrintBorderWithColour();
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("\nYou: ");
-                    continue;
-                    //-------------------------------------------------//
-                }
+                //-------------------------------------------------//
+                // Get the chatbot's response using the method
+                string chatbotResponse = await ChatbotLogic.GetResponse(userMessage, userName, mainWindow);
+                fullMessage = chatbotResponse + "\n\n";
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
-                // Check if the user wants to exit
-                if (userMessage.ToLower() == "exit")
-                {
-                    //-------------------------------------------------//
-                    //set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
-                    //-------------------------------------------------//
+                // Call TextToSpeech method to convert response to speech
+                Communication.TextToSpeech(chatbotResponse);
+                //-------------------------------------------------//
 
-                    //-------------------------------------------------//
-                    // Call TextToSpeech method to convert the goodbye message to speech
-                    Communication.TextToSpeech("Goodbye " + userName + ", have a great day!\n");
-                    ConsoleFormat.PrintBorderWithColour();
-                    //-------------------------------------------------//
-                }
-                else if (userMessage.ToLower() == "help")
-                {
-                    //-------------------------------------------------//
-                    //set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
-                    //-------------------------------------------------//
+                //-------------------------------------------------//
+                // Ask the user for another message
+                string followupMessage = followUpPrompts[rnd.Next(followUpPrompts.Length)];
+                Communication.TextToSpeech(followupMessage);
+                fullMessage += followupMessage;
+                //-------------------------------------------------//
 
-                    //-------------------------------------------------//
-                    // Print every possible question
-                    ChatbotLogic.ListPossibleQuestions();
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("\nYou: ");
-                    //-------------------------------------------------//
-                }
-                else
-                {
-                    //-------------------------------------------------//
-                    // Get the chatbot's response using the method
-                    string chatbotResponse = ChatbotLogic.GetResponse(userMessage, userName);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    //set the colour to the chatbot
-                    ConsoleFormat.SwitchTextColour(0);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Call TextToSpeech method to convert response to speech
-                    Communication.TextToSpeech(chatbotResponse);
-                    Console.WriteLine("");
-                    ConsoleFormat.PrintBorderWithColour();
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // Ask the user for another message
-                    Thread.Sleep(2000);
-                    Communication.TextToSpeech(followUpPrompts[rnd.Next(followUpPrompts.Length)]);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    //set the colour to the user
-                    ConsoleFormat.SwitchTextColour(1);
-                    //-------------------------------------------------//
-
-                    //-------------------------------------------------//
-                    // get the user's message
-                    Console.Write("\nYou: ");
-                    //-------------------------------------------------//
-                }
-
-            } while (userMessage.ToLower() != "exit");
+                //-------------------------------------------------//
+                // Print the chatbot's response to the chatbot output
+                await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
+                //-------------------------------------------------//
+            }
             //-------------------------------------------------//
         }
-        //------------------------------------------------------------------------------------------------------------------//        
+        //------------------------------------------------------------------------------------------------------------------//
 
     }
     //------------------------------------------------------------------------------------------------------------------//
