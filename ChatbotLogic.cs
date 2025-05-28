@@ -285,7 +285,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
         {
             //-------------------------------------------------//
             // Check if the user message contains "create" and "task"
-            if (userMessage.ToLower().Contains("create") && userMessage.ToLower().Contains("task"))
+            if (userMessage.ToLower().Contains("reminder") || userMessage.ToLower().Contains("create") && userMessage.ToLower().Contains("task"))
             {
                 //-------------------------------------------------//
                 // close the main window
@@ -326,6 +326,27 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 //-------------------------------------------------//
             }
             //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            //if the usre asks to start the quiz, open the quiz window
+            if (userMessage.ToLower().Contains("quiz"))
+            {
+                //-------------------------------------------------//
+                // close the main window
+                mainWindow.Dispose();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Open the Quiz Window
+                Mini_Quiz_GUI quiz = new Mini_Quiz_GUI();
+                quiz.ShowDialog();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the chatbot output to an empty string
+                return true;
+                //-------------------------------------------------//
+            }
 
 
             //-------------------------------------------------//

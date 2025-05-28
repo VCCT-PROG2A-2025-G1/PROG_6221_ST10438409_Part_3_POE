@@ -60,10 +60,6 @@ namespace PROG_6221_ST10438409_Part_3_POE
         // </summary>
         public static void Main(string[] args)
         {
-            // create task gui window
-            TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
-            taskAssistantGUI.ShowDialog();
-
 
             //-------------------------------------------------//
             // Question 1 - Audio Greeting            

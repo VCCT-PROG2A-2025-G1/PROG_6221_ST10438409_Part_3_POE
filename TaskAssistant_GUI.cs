@@ -233,6 +233,13 @@ namespace PROG_6221_ST10438409_Part_3_POE
             //-------------------------------------------------//
 
             //-------------------------------------------------//
+            //make it so that this window cannot be closed
+            this.ControlBox = false;
+            this.ResumeLayout(false);
+            this.PerformLayout();
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
             // Sets the form to be centered on the screen
             this.StartPosition = FormStartPosition.CenterScreen;
             //-------------------------------------------------//
