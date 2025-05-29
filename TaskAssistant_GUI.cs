@@ -216,6 +216,85 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
+        // This method will be used to set the Tasks Name and Description text boxes.
+        // </summary>
+        public void setTaskDetails(string taskName, string taskDescription, string taskDate)
+        {
+            //-------------------------------------------------//
+            // Set the text of the Task Name and Description text boxes
+            txtTaskName.Text = taskName;
+            txtTaskDescription.Text = taskDescription;
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Normalize the taskDate string to handle common phrases like "tomorrow", "today", and "yesterday"
+            string normalized = taskDate.Trim().ToLower();
+            DateTime dateValue;
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Check for common phrases and set the dateValue accordingly
+            if (normalized == "tomorrow")
+            {
+                //-------------------------------------------------//
+                // Set the dateValue to tomorrow if the taskDate is "tomorrow"
+                dateValue = DateTime.Today.AddDays(1);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the DateTimePicker value to the parsed dateValue
+                dtpReminderDate.Value = dateValue;
+                //-------------------------------------------------//
+            }
+            else if (normalized == "today")
+            {
+                //-------------------------------------------------//
+                // Set the dateValue to today if the taskDate is "today"
+                dateValue = DateTime.Today;
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the DateTimePicker value to the parsed dateValue
+                dtpReminderDate.Value = dateValue;
+                //-------------------------------------------------//
+            }
+            else if (normalized == "yesterday")
+            {
+                //-------------------------------------------------//
+                // Set the dateValue to yesterday if the taskDate is "yesterday"
+                dateValue = DateTime.Today.AddDays(-1);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the DateTimePicker value to the parsed dateValue
+                dtpReminderDate.Value = dateValue;
+                //-------------------------------------------------//
+            }
+            // Check if_ the string is empty
+            else if(string.IsNullOrEmpty(normalized))
+            {
+                //-------------------------------------------------//
+                //do nothing, no reminder is set.
+                //-------------------------------------------------//
+            }
+            else
+            {
+                //-------------------------------------------------//
+                // Fallback to standard parsing
+                dateValue = DateTime.Parse(taskDate);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Set the DateTimePicker value to the parsed dateValue
+                dtpReminderDate.Value = dateValue;
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//            
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
         // This method is called when the form is loaded.
         // It initializes the form and sets up any necessary event handlers.
         // </summary>

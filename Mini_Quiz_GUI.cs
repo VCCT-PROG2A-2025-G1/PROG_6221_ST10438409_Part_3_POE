@@ -423,11 +423,25 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 {
                     Communication.TextToSpeech("You did an amazing job! You are a cybersecurity expert!");
                     MessageBox.Show("You did an amazing job! You are a cybersecurity expert!", "Great Job!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //-----------------------------------//
+                    // Open Main Window and dispose this window
+                    MainWindow main= new MainWindow();
+                    main.ShowDialog();
+                    this.Dispose();
+                    //-----------------------------------//
                 }
                 else
                 {
                     Communication.TextToSpeech("Thank you for participating in the quiz. Keep learning and improving your cybersecurity knowledge!");
                     MessageBox.Show("Thank you for participating in the quiz. Keep learning and improving your cybersecurity knowledge!", "Thank You", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //-----------------------------------//
+                    // Open Main Window and dispose this window
+                    MainWindow main = new MainWindow();
+                    main.ShowDialog();
+                    this.Dispose();
+                    //-----------------------------------//
                 }
                 //-------------------------------------------------//
 

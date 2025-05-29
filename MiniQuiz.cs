@@ -100,8 +100,15 @@ namespace PROG_6221_ST10438409_Part_1
         {
             //-------------------------------------------------//
             //Declare a string variable to store the question, plus the first 4 answers
-            string quizQuestion = $"{question}\n\nA: {answer_A}\n\nB: {answer_B}\n\nC: {answer_C}\n\nD: {answer_D}";
+            string quizQuestion = $"Question:\n{question}\n\nA: {answer_A}\n\nB: {answer_B}\n\nC: {answer_C}\n\nD: {answer_D}"; ;
             //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // if C and D are empty, then only return A and B
+            if (string.IsNullOrEmpty(answer_C) && string.IsNullOrEmpty(answer_D))
+            {
+                quizQuestion = $"Question:\n{question}\n\n1. {answer_A}\n\n2. {answer_B}";
+            }
 
             //-------------------------------------------------//
             // Return the quiz question

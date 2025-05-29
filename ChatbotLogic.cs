@@ -277,15 +277,198 @@ namespace PROG_6221_ST10438409_Part_3_POE
         }
         //------------------------------------------------------------------------------------------------------------------//
 
+        //-------------------------------------------------//
+        // Add to ChatbotLogic class
+        public static List<string> recentActions = new List<string>();
+        //-------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
+        // This method returns a summary of recent actions taken by the user.
+        // </summary>
+        public static string GetRecentActionsSummary()
+        {
+            //-------------------------------------------------//
+            // Check if there are any recent actions
+            if (recentActions.Count == 0)
+            { 
+                return "No recent actions found.";
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Create a summary of recent actions
+            string summary = "Here’s a summary of recent actions:\n";
+            for (int i = 0; i < recentActions.Count; i++)
+            {
+                summary += $" {i + 1}. {recentActions[i]}\n";
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Trim the summary to remove any trailing whitespace or newlines
+            return summary.TrimEnd();
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
         // This method checks if the user wants to create a task and opens the Task Assistant GUI if so.
+        // Copilot helped with the creation of NPL simulation for task and reminder detection.
         // </summary>
         public static bool Check_TaskAssistant(string userMessage, MainWindow mainWindow)
         {
+
+            //------------------------------------------------------------------------------------------------------------------//
+            // Natural Language Processing (NLP) Simulation (GUI)
+
+            //-------------------------------------------------//
+            // Normalize message for case-insensitive matching
+            string lowered = userMessage.ToLower();
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Patterns for reminders and tasks
+            var reminderPatterns = new[]
+            {
+                @"remind me to (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
+                @"remind me to (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$",
+                @"can you remind me to (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
+                @"can you remind me to (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$",
+                @"set a reminder (for|to) (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
+                @"set a reminder (for|to) (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$",
+                @"add (a )?reminder (for|to) (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
+                @"add (a )?reminder (for|to) (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$"
+            };
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Patterns for task creation
+            var taskPatterns = new[]
+            {
+                @"add (a )?task (to|for) (?<title>.+?)(?:\:|,|\.|\?|$)(?<desc>.*)",
+                @"create (a )?task (to|for) (?<title>.+?)(?:\:|,|\.|\?|$)(?<desc>.*)"
+            };
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Reminder detection
+            foreach (var pattern in reminderPatterns)
+            {
+                //-------------------------------------------------//
+                // Match the user message against the reminder patterns
+                var match = Regex.Match(userMessage, pattern, RegexOptions.IgnoreCase);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // If a match is found, extract the title, date, and description
+                if (match.Success)
+                {
+                    //-------------------------------------------------//
+                    // Extract title, date, and description from the match
+                    string title = match.Groups["title"].Value.Trim();
+                    string date = match.Groups["date"].Success ? match.Groups["date"].Value.Trim() : "";
+                    string desc = match.Groups["desc"].Value.Trim();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Just use the title as the description for reminders
+                    desc = title; 
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Add to the summary and recent actions
+                    string summary = $"Reminder set for '{title}'" + (string.IsNullOrEmpty(date) ? "" : $" on {date}") + ".";
+                    recentActions.Add(summary);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Notify the user and open the Task Assistant GUI
+                    Communication.TextToSpeech(summary);
+                    mainWindow.Dispose();
+                    TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
+
+                    //-------------------------------------------------//
+                    //import the title and description into the Task Assistant
+                    taskAssistantGUI.setTaskDetails(title, desc, date);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Show the Task Assistant GUI
+                    taskAssistantGUI.ShowDialog();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //return true
+                    return true;
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Task detection
+            foreach (var pattern in taskPatterns)
+            {
+                //-------------------------------------------------//
+                // Match the user message against the task patterns
+                var match = Regex.Match(userMessage, pattern, RegexOptions.IgnoreCase);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // If a match is found, extract the title and description
+                if (match.Success)
+                {
+                    //-------------------------------------------------//
+                    // Extract title and description from the match
+                    string title = match.Groups["title"].Value.Trim();
+                    string desc = match.Groups["desc"].Value.Trim();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // If the description is empty, use the title as the description
+                    if (string.IsNullOrEmpty(desc)) desc = title;
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Add to the summary and recent actions
+                    string summary = $"Task added: '{title}'. Would you like to set a reminder for this task?";
+                    recentActions.Add($"Task added: '{title}' (no reminder set).");
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Notify the user and open the Task Assistant GUI
+                    Communication.TextToSpeech(summary);
+                    mainWindow.Dispose();
+                    TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //import the title and description into the Task Assistant
+                    taskAssistantGUI.setTaskDetails(title, desc, "");
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Show the Task Assistant GUI
+                    taskAssistantGUI.ShowDialog();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // return true
+                    return true;
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+            //------------------------------------------------------------------------------------------------------------------//
+
             //-------------------------------------------------//
             // Check if the user message contains "create" and "task"
-            if (userMessage.ToLower().Contains("reminder") || userMessage.ToLower().Contains("create") && userMessage.ToLower().Contains("task"))
+            if (lowered.Contains("reminder") || lowered.Contains("create") && lowered.Contains("task"))
             {
                 //-------------------------------------------------//
                 // close the main window
@@ -307,7 +490,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
             //-------------------------------------------------//
             // If the user message does not contain "create" and "task", do nothing
-            if((userMessage.ToLower().Contains("show") && userMessage.ToLower().Contains("task")) || (userMessage.ToLower().Contains("display") && userMessage.ToLower().Contains("task")))
+            if((lowered.Contains("show") && lowered.Contains("task")) || (lowered.Contains("display") && lowered.Contains("task")))
             {
                 //-------------------------------------------------//
                 // close the main window
@@ -329,7 +512,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
             //-------------------------------------------------//
             //if the usre asks to start the quiz, open the quiz window
-            if (userMessage.ToLower().Contains("quiz"))
+            if (lowered.Contains("quiz"))
             {
                 //-------------------------------------------------//
                 // close the main window
@@ -347,7 +530,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 return true;
                 //-------------------------------------------------//
             }
-
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             // else return false
@@ -366,6 +549,14 @@ namespace PROG_6221_ST10438409_Part_3_POE
         public static async Task<string> GetResponse(string message, string userName, MainWindow mainWindow)
         {
             responses = LoadResponses();
+
+            //-------------------------------------------------//
+            // Check if the user wants a task list summary_
+            if (message.ToLower().Contains("what have you done for me"))
+            {
+                return GetRecentActionsSummary();
+            }
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             //check task assistant

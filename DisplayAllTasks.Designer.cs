@@ -40,25 +40,28 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblTitle.Location = new System.Drawing.Point(13, 7);
+            this.lblTitle.Location = new System.Drawing.Point(17, 9);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(162, 25);
+            this.lblTitle.Size = new System.Drawing.Size(202, 31);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "List of all Tasks";
             // 
             // txtListOfTasks
             // 
-            this.txtListOfTasks.Location = new System.Drawing.Point(5, 52);
+            this.txtListOfTasks.Location = new System.Drawing.Point(7, 64);
+            this.txtListOfTasks.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtListOfTasks.Name = "txtListOfTasks";
-            this.txtListOfTasks.Size = new System.Drawing.Size(385, 294);
+            this.txtListOfTasks.Size = new System.Drawing.Size(512, 361);
             this.txtListOfTasks.TabIndex = 1;
             this.txtListOfTasks.Text = "";
             // 
             // btnReturn
             // 
-            this.btnReturn.Location = new System.Drawing.Point(10, 390);
+            this.btnReturn.Location = new System.Drawing.Point(13, 480);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(82, 56);
+            this.btnReturn.Size = new System.Drawing.Size(109, 69);
             this.btnReturn.TabIndex = 2;
             this.btnReturn.Text = "Return";
             this.btnReturn.UseVisualStyleBackColor = true;
@@ -66,9 +69,10 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(161, 390);
+            this.btnDelete.Location = new System.Drawing.Point(215, 480);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(82, 56);
+            this.btnDelete.Size = new System.Drawing.Size(109, 69);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete Task";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -76,9 +80,10 @@
             // 
             // btnCompleteTask
             // 
-            this.btnCompleteTask.Location = new System.Drawing.Point(308, 390);
+            this.btnCompleteTask.Location = new System.Drawing.Point(380, 480);
+            this.btnCompleteTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCompleteTask.Name = "btnCompleteTask";
-            this.btnCompleteTask.Size = new System.Drawing.Size(82, 56);
+            this.btnCompleteTask.Size = new System.Drawing.Size(140, 69);
             this.btnCompleteTask.TabIndex = 4;
             this.btnCompleteTask.Text = "Complete Task";
             this.btnCompleteTask.UseVisualStyleBackColor = true;
@@ -86,14 +91,15 @@
             // 
             // DisplayAllTasks
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 450);
+            this.ClientSize = new System.Drawing.Size(536, 554);
             this.Controls.Add(this.btnCompleteTask);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.txtListOfTasks);
             this.Controls.Add(this.lblTitle);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "DisplayAllTasks";
             this.Text = "DisplayAllTasks";
             this.Load += new System.EventHandler(this.DisplayAllTasks_Load);
