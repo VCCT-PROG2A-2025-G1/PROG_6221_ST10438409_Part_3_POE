@@ -14,6 +14,8 @@
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PROG_6221_ST10438409_Part_1;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -368,13 +370,21 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     //-------------------------------------------------//
                     // Extract title, date, and description from the match
                     string title = match.Groups["title"].Value.Trim();
-                    string date = match.Groups["date"].Success ? match.Groups["date"].Value.Trim() : "";
                     string desc = match.Groups["desc"].Value.Trim();
+                    string date = match.Groups["date"].Success ? match.Groups["date"].Value.Trim() : "";                    
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
                     // Just use the title as the description for reminders
-                    desc = title; 
+                    desc = title;
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Set the Title to be only the first Word of the title
+                    if (title.Contains(" "))
+                    {
+                        title = title.Split(' ')[0];
+                    }
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
@@ -388,6 +398,26 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     Communication.TextToSpeech(summary);
                     mainWindow.Dispose();
                     TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // create entry to activity log, check if_ it is a reminder or task
+                    string lower = userMessage.ToLower();
+                    string log = "";
+
+                    if (lower.Contains("remind"))
+                    {
+                        log = "Reminder Added: " + title + " on " + DateTime.Now;
+                    }else
+                    {
+                        log = "Task Added: " + title + " on " + DateTime.Now;
+                    }
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //Add entry to activity log
+                    ActivityLog.addEntry(log);
+                    //-------------------------------------------------//
 
                     //-------------------------------------------------//
                     //import the title and description into the Task Assistant
@@ -433,6 +463,14 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
+                    // Set the Title to be only the first Word of the title
+                    if (title.Contains(" "))
+                    {
+                        title = title.Split(' ')[0];
+                    }
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
                     // Add to the summary and recent actions
                     string summary = $"Task added: '{title}'. Would you like to set a reminder for this task?";
                     recentActions.Add($"Task added: '{title}' (no reminder set).");
@@ -443,6 +481,23 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     Communication.TextToSpeech(summary);
                     mainWindow.Dispose();
                     TaskAssistant_GUI taskAssistantGUI = new TaskAssistant_GUI();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Add entry to activity log
+                    string lower = userMessage.ToLower();
+                    string log = "";
+
+                    if (lower.Contains("remind"))
+                    {
+                         log = "Reminder Added: " + title + " on " + DateTime.Now;
+                    }
+                    else
+                    {
+                         log = "Task Added: " + title + " on " + DateTime.Now;
+                    }
+                    //-------------------------------------------------//
+                    ActivityLog.addEntry(log);
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//

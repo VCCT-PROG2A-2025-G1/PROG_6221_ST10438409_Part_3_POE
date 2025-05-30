@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityLog.cs" />
     <Compile Include="ChatbotLogic.cs" />
     <Compile Include="Communication.cs" />
     <Compile Include="ConsoleFormat.cs" />

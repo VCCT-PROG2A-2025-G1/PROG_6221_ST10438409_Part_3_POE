@@ -49,13 +49,27 @@ namespace PROG_6221_ST10438409_Part_3_POE
             InitializeComponent();
             SetupForm();
             ApplyStyling();
+            txtName.KeyDown += txtName_KeyDown;
         }
         //--------------------------------------------------------------------------------------------//
 
         //--------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Sets up the form's properties and initial state.
-        /// </summary>
+        // Handles the KeyDown event for the txtName TextBox to allow submission with the Enter key.
+        private void txtName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnEnterName_Click_1(btnEnterName, EventArgs.Empty);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+        //--------------------------------------------------------------------------------------------//
+
+        //--------------------------------------------------------------------------------------------//
+        // <summary>
+        // Sets up the form's properties and initial state.
+        // </summary>
         private void SetupForm()
         {
             this.Text = "Enter Your Name";
@@ -68,9 +82,9 @@ namespace PROG_6221_ST10438409_Part_3_POE
         //--------------------------------------------------------------------------------------------//
 
         //--------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Applies professional, colorful, and modern styling to the form and its controls.
-        /// </summary>
+        // <summary>
+        // Applies professional, colorful, and modern styling to the form and its controls.
+        // </summary>
         private void ApplyStyling()
         {
             // Form background

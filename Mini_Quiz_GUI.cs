@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -67,12 +68,38 @@ namespace PROG_6221_ST10438409_Part_3_POE
         }
         //------------------------------------------------------------------------------------------------------------------//
 
+        //-------------------------------------------------------------------------------------------------------------------//
+        // <summary>
+        // Helper method to set rounded edges
+        private void SetButtonRoundEdge(Button button, int radius)
+        {
+            //-------------------------------------------------//
+            // Create a GraphicsPath to define the rounded rectangle shape
+            var rect = new Rectangle(0, 0, button.Width, button.Height);
+            var path = new GraphicsPath();
+            int diameter = radius * 2;
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            button.Region = new Region(path);
+            //-------------------------------------------------//
+        }
+        //-------------------------------------------------------------------------------------------------------------------//
+
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
         // Applies custom styling to the form and its controls.
         // </summary>
         private void ApplyStyling()
         {
+            //-------------------------------------------------//
+            // Round the button edges
+            SetButtonRoundEdge(btnSubmit, 20);
+            SetButtonRoundEdge(btnExit, 20);
+            //-------------------------------------------------//
+
             //-------------------------------------------------//
             // Form background
             this.BackColor = Color.FromArgb(30, 34, 45);
@@ -397,7 +424,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
             //Add Question Number
             if((currentQuestionIndex + 1) < quizQuestions.Count)
             {
-                lblAnswer.Text = $"Question {currentQuestionIndex + 1} of {quizQuestions.Count}";
+                lblAnswer.Text = $"Question {currentQuestionIndex + 2} of {quizQuestions.Count}";
             }            
             //-------------------------------------------------//
 
@@ -415,6 +442,11 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 // Show the final score or any other end-of-quiz logic here
                 Communication.TextToSpeech($"You answered {correctCount} out of {quizQuestions.Count} questions correctly.");
                 MessageBox.Show($"You answered {correctCount} out of {quizQuestions.Count} questions correctly.", "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Add an Quiz Entry
+                ActivityLog.addEntry($"Quiz Ended: {correctCount} correct questions answered on " + DateTime.Now);
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
@@ -593,6 +625,11 @@ namespace PROG_6221_ST10438409_Part_3_POE
         // </summary>
         private void btnExit_Click(object sender, EventArgs e)
         {
+            //-------------------------------------------------//
+            // Add an Quiz Entry
+            ActivityLog.addEntry($"Quiz Ended: {currentQuestionIndex} questions answered on " + DateTime.Now);
+            //-------------------------------------------------//
+
             //-------------------------------------------------//
             // Show a confirmation message before exiting
             Dispose();

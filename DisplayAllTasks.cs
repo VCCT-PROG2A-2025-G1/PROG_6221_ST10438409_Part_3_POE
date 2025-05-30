@@ -13,17 +13,19 @@
 // <summary>
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
+using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
+using PROG_6221_ST10438409_Part_1;
 using System;
 using System.Collections;
-
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -60,6 +62,17 @@ namespace PROG_6221_ST10438409_Part_3_POE
         // </summary>
         private void DisplayAllTasks_Load(object sender, EventArgs e)
         {
+
+            //-------------------------------------------------//
+            // Set the title of the form
+            this.Text = "Display All Tasks";
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // prevent this form from being closed by the user
+            this.ControlBox = false;
+            //-------------------------------------------------//
+
             //-------------------------------------------------//
             // prevent this window from being resized, maximized, or minimized
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -217,6 +230,30 @@ namespace PROG_6221_ST10438409_Part_3_POE
             btnCompleteTask.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 150, 200);
             btnCompleteTask.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 120, 180);
             //-------------------------------------------------//
+
+
+            //-------------------------------------------------//
+            // Make every button have round edges 
+            SetButtonRoundEdge(btnReturn, 20);
+            SetButtonRoundEdge(btnDelete, 20);
+            SetButtonRoundEdge(btnCompleteTask, 20);
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // Helper method to set rounded edges
+        private void SetButtonRoundEdge(Button button, int radius)
+        {
+            var rect = new Rectangle(0, 0, button.Width, button.Height);
+            var path = new GraphicsPath();
+            int diameter = radius * 2;
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            button.Region = new Region(path);
         }
         //------------------------------------------------------------------------------------------------------------------//
 
@@ -287,6 +324,12 @@ namespace PROG_6221_ST10438409_Part_3_POE
             // If the task was found, remove it from the ArrayList and update the file
             if (taskToRemove != null)
             {
+                //-------------------------------------------------//
+                // Create a activity log entry for the deleted task
+                string activityLog = $"Task '{taskToRemove.Title}' deleted on {DateTime.Now}.";
+                ActivityLog.addEntry(activityLog);
+                //-------------------------------------------------//
+
                 taskArrayList.Remove(taskToRemove);
 
                 //-------------------------------------------------//
@@ -399,6 +442,12 @@ namespace PROG_6221_ST10438409_Part_3_POE
             }
             else
             {
+                //-------------------------------------------------//
+                // Create a activity log entry for the completed task
+                string activityLog = $"Task '{taskToCompleteObj.Title}' marked as completed on {DateTime.Now}.";
+                ActivityLog.addEntry(activityLog);
+                //-------------------------------------------------//
+
                 //-------------------------------------------------//
                 // Update the task status to "Completed"
                 taskToCompleteObj.Status = "Completed";

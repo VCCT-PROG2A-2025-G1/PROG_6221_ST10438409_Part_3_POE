@@ -8,12 +8,12 @@
 // <summary>
 // Imports the necessary libraries for the program to run.
 // </summary>
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -33,6 +33,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
     // </summary>
     public class Program
     {
+
         //-------------------------------------------------//
         // Declare a static variable to store the chatbot responses
         public static Dictionary<string, Dictionary<string, string>> responses;
@@ -60,6 +61,8 @@ namespace PROG_6221_ST10438409_Part_3_POE
         // </summary>
         public static void Main(string[] args)
         {
+            Mini_Quiz_GUI miniQuizGUI = new Mini_Quiz_GUI();
+            miniQuizGUI.ShowDialog(); // Show the mini quiz GUI first
 
             //-------------------------------------------------//
             // Question 1 - Audio Greeting            
@@ -122,6 +125,31 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 // Print every possible question
                 await ChatbotLogic.ListPossibleQuestions(mainWindow);
                 //-------------------------------------------------//
+            }
+            else if(userMessage.ToLower().Contains("show") && userMessage.ToLower().Contains("log") || userMessage.ToLower().Contains("what have you done for me"))
+            {
+
+                //-------------------------------------------------//
+                // Make the string title
+                string message = "Here’s a summary of recent actions:\n";
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Get the last five entries from the activity log
+                string lastFiveEntries = ActivityLog.getLastFiveEntries();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Combine the message and the last five entries
+                string fullMessage = message + lastFiveEntries;
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Print the activity log entries to the chatbot output
+                Communication.TextToSpeech(fullMessage);
+                await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
+                //-------------------------------------------------//
+
             }
             else
             {

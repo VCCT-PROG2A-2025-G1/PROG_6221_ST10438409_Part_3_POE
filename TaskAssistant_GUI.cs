@@ -211,6 +211,31 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 //-------------------------------------------------//
             }
             //-------------------------------------------------//
+
+            //--------------------------------------------------//
+            //set the button round edges
+            SetButtonRoundEdge(btnSaveTask, 20);
+            SetButtonRoundEdge(btnCancelTask, 20);
+            //--------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // Helper method to set rounded edges
+        private void SetButtonRoundEdge(Button button, int radius)
+        {
+            //-------------------------------------------------//
+            // Create a GraphicsPath to define the rounded edges
+            var rect = new Rectangle(0, 0, button.Width, button.Height);
+            var path = new GraphicsPath();
+            int diameter = radius * 2;
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            button.Region = new Region(path);
+            //-------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//
 
