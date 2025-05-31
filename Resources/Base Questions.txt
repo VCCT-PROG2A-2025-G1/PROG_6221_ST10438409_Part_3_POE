@@ -1,0 +1,105 @@
+What is a phishing scam?
+A way to catch fish online
+A scam that tricks you into giving away personal info
+A type of password
+A secure website
+B
+Phishing scams try to fool you into revealing personal or financial information.
+Which of the following is a sign of a phishing email?
+It comes from a known sender
+It has perfect grammar
+It contains urgent requests and suspicious links
+It never asks for information
+C
+Phishing emails often create urgency and include sketchy links to trick you.
+What should you do to avoid phishing?
+Click all links in emails
+Always verify the sender and avoid unknown links
+Share your password
+Ignore browser warnings
+B
+Being cautious with unknown links and senders helps you avoid scams.
+What makes a good password?
+Your name and birthdate
+A long, random mix of letters, numbers, and symbols
+The word "password"
+Your favorite color
+B
+Strong passwords are unpredictable and hard to guess.
+Which of the following is a strong password?
+123456
+password
+Blue!Car$7Monkey
+qwerty
+C
+A strong password combines complexity and randomness.
+What is a safe browsing habit?
+Downloading files from unknown sources
+Using an ad blocker and keeping your browser updated
+Clicking on all popups
+Ignoring HTTPS
+B
+Safe browsing means protecting your system and avoiding risky content.
+How can you browse the internet safely?
+Only use HTTP sites
+Avoid popups and stick to secure (HTTPS) websites
+Share personal info on every site
+Ignore browser updates
+B
+Secure websites and updated browsers help keep you safe online.
+What should you look for to ensure a website is secure?
+The site loads slowly
+The URL starts with https:// and shows a padlock icon
+The site has many ads
+The site asks for your password immediately
+B
+HTTPS and the padlock symbol show the site encrypts your data.
+Why should you not reuse passwords?
+It makes logging in faster
+If one password is stolen, others remain safe
+It is easier to remember
+It is recommended by experts
+B
+Reusing passwords puts all your accounts at risk if one gets hacked.
+What is a good way to protect your password?
+Share it with friends
+Write it on a sticky note
+Use a password manager and never reuse passwords
+Use your pet’s name
+C
+Password managers store strong, unique passwords securely.
+Using the same password for multiple accounts increases your risk if one account is hacked.
+True
+False
+ 
+ 
+A
+If one site is compromised, all accounts using that password are at risk.
+Public Wi-Fi networks are always safe to use without any precautions.
+True
+False
+
+
+B
+Public networks can be easily intercepted—use a VPN or avoid sensitive tasks.
+Legitimate companies will never ask for your password via email.
+True
+False
+
+
+A
+No trustworthy company will request your password through email.
+Keeping your software and devices updated helps protect against security threats.
+True
+False
+
+
+A
+Updates often patch vulnerabilities that hackers exploit.
+Two-factor authentication adds an extra layer of security to your accounts.
+True
+False
+
+
+A
+It requires something you know and something you have, making access harder for attackers.

@@ -1,7 +1,7 @@
 #\PROG_6221_ST10438409_Part_3_POE\README.md
 # Cybersecurity Chatbot
 
-This project is a comprehensive GUI-based chatbot application designed to educate users on a wide range of cybersecurity topics. The chatbot provides interactive, personalized conversations to help users understand best practices in areas such as password security, phishing scams, safe browsing, social engineering, and more. The latest version (Part 3) introduces a modernized user experience with Windows Forms, advanced task and reminder management, activity logging, and a mini-quiz feature.
+This project is a comprehensive, console and GUI-based chatbot application designed to educate users on a wide range of cybersecurity topics. The chatbot provides interactive, personalized conversations to help users understand best practices in areas such as password security, phishing scams, safe browsing, social engineering, and more. The latest version (Part 3) introduces a modernized user experience with Windows Forms, advanced task and reminder management, activity logging, and a mini-quiz feature.
 
 ---
 
@@ -97,6 +97,7 @@ This project is a comprehensive GUI-based chatbot application designed to educat
 3. **Ask questions:**
    - Type questions about cybersecurity (e.g., "How do I create a strong password?").
    - Type `help` to see a list of supported questions and topics.
+   - Type `joke` for a fun interaction.
    - Type `exit` to end the session.
    - Ask to "add a task" or "set a reminder" to use the Task Assistant GUI.
    - Type "quiz" to launch the cybersecurity quiz.
@@ -125,7 +126,7 @@ You: quiz
 
 You: show log
 
-Chatbot: Hereâ€™s a summary of recent actions:  
+Chatbot: Here’s a summary of recent actions:  
 1. Task Added: update antivirus on 2025/05/30  
 2. Quiz Started: Cybersecurity Basics
 

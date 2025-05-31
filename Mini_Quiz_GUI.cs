@@ -418,15 +418,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 rBtnD.Enabled = false;
                 //-------------------------------------------------//
             }
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            //Add Question Number
-            if((currentQuestionIndex + 1) < quizQuestions.Count)
-            {
-                lblAnswer.Text = $"Question {currentQuestionIndex + 2} of {quizQuestions.Count}";
-            }            
-            //-------------------------------------------------//
+            //-------------------------------------------------//            
 
             //-------------------------------------------------//
             // check if_ the quiz is complete
@@ -590,6 +582,14 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 lblCountDown.Text = $"Next question in {count} seconds...";
                 await Task.Delay(1000); // Wait for 1 second
                 //-------------------------------------------------//
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            //Add Question Number
+            if ((currentQuestionIndex + 1) < quizQuestions.Count)
+            {
+                lblAnswer.Text = $"Question {currentQuestionIndex + 2} of {quizQuestions.Count}";
             }
             //-------------------------------------------------//
 

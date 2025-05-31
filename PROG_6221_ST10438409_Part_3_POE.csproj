@@ -104,6 +104,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Base Questions.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Greeting.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

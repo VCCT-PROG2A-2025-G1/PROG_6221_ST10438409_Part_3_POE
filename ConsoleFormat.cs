@@ -42,10 +42,10 @@ namespace PROG_6221_ST10438409_Part_3_POE
      |                                                                                                                     |
      |                                                                                                                     |
      |                                                                                                                     |
-     |                        For A Better Tomorrow                                                        |
+     |                                For A Better Tomorrow                                                |
      |                                                                                                                     |
      |                                                                                                                     |
-     |          The Security advice you need, fast and efficient                             |
+     |                 The Security advice you need, fast and efficient                      |
      |_______________________________________________________|
 ";
 

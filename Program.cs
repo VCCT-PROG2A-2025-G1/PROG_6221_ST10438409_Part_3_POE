@@ -61,9 +61,6 @@ namespace PROG_6221_ST10438409_Part_3_POE
         // </summary>
         public static void Main(string[] args)
         {
-            Mini_Quiz_GUI miniQuizGUI = new Mini_Quiz_GUI();
-            miniQuizGUI.ShowDialog(); // Show the mini quiz GUI first
-
             //-------------------------------------------------//
             // Question 1 - Audio Greeting            
             Communication.FirstGreeting();
