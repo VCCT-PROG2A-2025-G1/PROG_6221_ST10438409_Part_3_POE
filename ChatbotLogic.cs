@@ -21,9 +21,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 //------------------------------------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -341,7 +343,12 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 @"set a reminder (for|to) (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
                 @"set a reminder (for|to) (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$",
                 @"add (a )?reminder (for|to) (?<title>.+?) (?<date>tomorrow|today|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday)(?:[?.,:]\s*)?$",
-                @"add (a )?reminder (for|to) (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$"
+                @"add (a )?reminder (for|to) (?<title>.+?)(?: on (?<date>[^?.,:]+))?(?:[?.,:]\s*)?$",
+
+                @"add (a )?reminder (for|to) (?<title>.+?) in (?<number>\d+) (?<unit>day|days|week|weeks|hour|hours|minute|minutes)(?:[?.,:]\s*)?$",
+                @"set a reminder (for|to) (?<title>.+?) in (?<number>\d+) (?<unit>day|days|week|weeks|hour|hours|minute|minutes)(?:[?.,:]\s*)?$",
+                @"can you remind me to (?<title>.+?) in (?<number>\d+) (?<unit>day|days|week|weeks|hour|hours|minute|minutes)(?:[?.,:]\s*)?$",
+                @"remind me to (?<title>.+?) in (?<number>\d+) (?<unit>day|days|week|weeks|hour|hours|minute|minutes)(?:[?.,:]\s*)?$"
             };
             //-------------------------------------------------//
 
@@ -514,6 +521,16 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     // return true
                     return true;
                     //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                //Check if the user is asking to create a task
+                if (userMessage.ToLower().Contains("add") && userMessage.ToLower().Contains("task"))
+                {
+                    mainWindow.Dispose();
+                    TaskAssistant_GUI GUI = new TaskAssistant_GUI();
+                    GUI.ShowDialog();
                 }
                 //-------------------------------------------------//
             }

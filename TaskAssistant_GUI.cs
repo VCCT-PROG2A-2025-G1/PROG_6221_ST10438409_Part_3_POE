@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Timers;
+using System.Windows.Forms;
 
 //------------------------------------------------------------------------------------------------------------------//
 // Name: Dylan Shortt
@@ -75,14 +77,14 @@ namespace PROG_6221_ST10438409_Part_3_POE
             // Custom Timeframe label (below)
             this.lblCustomTimeframe = new System.Windows.Forms.Label();
             this.lblCustomTimeframe.Text = "Custom Timeframe in days (e.g. '7'):";
-            this.lblCustomTimeframe.Location = new System.Drawing.Point(559, 150);
+            this.lblCustomTimeframe.Location = new System.Drawing.Point(560, 150);
             this.lblCustomTimeframe.Size = new System.Drawing.Size(200, 25);
             this.lblCustomTimeframe.ForeColor = Color.White;
             this.Controls.Add(this.lblCustomTimeframe);
 
             // Custom Timeframe TextBox (below)
             this.txtCustomTimeframe = new System.Windows.Forms.TextBox();
-            this.txtCustomTimeframe.Location = new System.Drawing.Point(559, 180);
+            this.txtCustomTimeframe.Location = new System.Drawing.Point(560, 180);
             this.txtCustomTimeframe.Size = new System.Drawing.Size(200, 25);
             this.Controls.Add(this.txtCustomTimeframe);
         }
@@ -205,7 +207,23 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     // Darken on hover AND
                     // Reset on leave
                     btn.MouseEnter += (s, e) => btn.BackColor = Color.FromArgb(0, 150, 200); 
-                    btn.MouseLeave += (s, e) => btn.BackColor = Color.FromArgb(0, 200, 255); 
+                    btn.MouseLeave += (s, e) => btn.BackColor = Color.FromArgb(0, 200, 255);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Set the button format for the Show Tasks button
+                    
+                    btnShowTasks.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+                    btnShowTasks.BackColor = Color.FromArgb(0, 200, 255);
+                    btnShowTasks.ForeColor = Color.White;
+                    btnShowTasks.FlatStyle = FlatStyle.Flat;
+                    btnShowTasks.FlatAppearance.BorderSize = 0;
+                    btnShowTasks.Padding = new Padding(8, 4, 8, 4);
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    // Change cursor to hand on hover
+                    btnShowTasks.Cursor = Cursors.Hand;
                     //-------------------------------------------------//
                 }
                 //-------------------------------------------------//
@@ -216,6 +234,8 @@ namespace PROG_6221_ST10438409_Part_3_POE
             //set the button round edges
             SetButtonRoundEdge(btnSaveTask, 20);
             SetButtonRoundEdge(btnCancelTask, 20);
+            SetButtonRoundEdge(btnShowTasks, 20);
+            SetButtonRoundEdge(btnShowTasks, 20);
             //--------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//
@@ -445,8 +465,22 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 else
                 {
                     optionalReminder = "Remind me in " + txtCustomTimeframe.Text.Trim() + " days";
-                }                    
+
+                    //-------------------------------------------------//
+                    //set the reminder to 'X' days from now
+                    int X = int.Parse(txtCustomTimeframe.Text.Trim());
+
+                    var timer = new System.Timers.Timer(TimeSpan.FromDays(X).TotalMilliseconds);
+                    timer.Elapsed += (s, ex) => { MessageBox.Show("Reminder: " + txtTaskName.Text + "!"); timer.Stop(); };
+                    timer.Start();
+                    //-------------------------------------------------//
+
+                }
+                //-------------------------------------------------//
             }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
             // check if date is set to today
             else if (dtpReminderDate.Value.Date == DateTime.Today && dtpReminderDate.Checked)
             {
@@ -455,6 +489,35 @@ namespace PROG_6221_ST10438409_Part_3_POE
             else if (dtpReminderDate.Checked)
             {
                 optionalReminder = dtpReminderDate.Value.ToString("yyyy-MM-dd");
+
+                //-------------------------------------------------//
+                // Set a timer for the reminder
+                DateTime reminderTime = dtpReminderDate.Value;
+                double interval = (reminderTime - DateTime.Now).TotalMilliseconds;
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Check if the interval is greater than zero
+                if (interval > 0)
+                {
+                    //-------------------------------------------------//
+                    // Create a timer to show the reminder message
+                    var timer = new System.Timers.Timer(interval);
+                    timer.Elapsed += (s, eDate) => { MessageBox.Show("Reminder: " + txtTaskName.Text + "!"); timer.Stop(); };
+                    timer.Start();
+                    //-------------------------------------------------//
+                }
+                //------------------------------------------------//
+                else
+                {
+                    //-------------------------------------------------//
+                    // Show error message if the reminder time is in the past
+                    Communication.TextToSpeech("The reminder time cannot be in the past.");
+                    txtErrorMessage.Text = "The reminder time cannot be in the past.";
+                    txtErrorMessage.Visible = true;
+                    return;
+                    //-------------------------------------------------//
+                }
             }
             else
             {
@@ -488,6 +551,19 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
             Thread.Sleep(300);
             txtCustomTimeframe.Clear();
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        //This method shows the tasks window
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //-------------------------------------------------//
+            // Open the show tasks window
+            this.Dispose();
+            DisplayAllTasks displayAllTasks = new DisplayAllTasks();
+            displayAllTasks.ShowDialog();            
             //-------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//

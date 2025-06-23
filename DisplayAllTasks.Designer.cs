@@ -33,6 +33,7 @@
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCompleteTask = new System.Windows.Forms.Button();
+            this.btnEditTask = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -50,7 +51,7 @@
             // txtListOfTasks
             // 
             this.txtListOfTasks.Location = new System.Drawing.Point(7, 64);
-            this.txtListOfTasks.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtListOfTasks.Margin = new System.Windows.Forms.Padding(4);
             this.txtListOfTasks.Name = "txtListOfTasks";
             this.txtListOfTasks.Size = new System.Drawing.Size(512, 361);
             this.txtListOfTasks.TabIndex = 1;
@@ -59,7 +60,7 @@
             // btnReturn
             // 
             this.btnReturn.Location = new System.Drawing.Point(13, 480);
-            this.btnReturn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(4);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(109, 69);
             this.btnReturn.TabIndex = 2;
@@ -69,8 +70,8 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(215, 480);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelete.Location = new System.Drawing.Point(263, 480);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(109, 69);
             this.btnDelete.TabIndex = 3;
@@ -81,7 +82,7 @@
             // btnCompleteTask
             // 
             this.btnCompleteTask.Location = new System.Drawing.Point(380, 480);
-            this.btnCompleteTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCompleteTask.Margin = new System.Windows.Forms.Padding(4);
             this.btnCompleteTask.Name = "btnCompleteTask";
             this.btnCompleteTask.Size = new System.Drawing.Size(140, 69);
             this.btnCompleteTask.TabIndex = 4;
@@ -89,17 +90,29 @@
             this.btnCompleteTask.UseVisualStyleBackColor = true;
             this.btnCompleteTask.Click += new System.EventHandler(this.btnCompleteTask_Click);
             // 
+            // btnEditTask
+            // 
+            this.btnEditTask.Location = new System.Drawing.Point(130, 480);
+            this.btnEditTask.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditTask.Name = "btnEditTask";
+            this.btnEditTask.Size = new System.Drawing.Size(109, 69);
+            this.btnEditTask.TabIndex = 5;
+            this.btnEditTask.Text = "Edit Task";
+            this.btnEditTask.UseVisualStyleBackColor = true;
+            this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
+            // 
             // DisplayAllTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 554);
+            this.Controls.Add(this.btnEditTask);
             this.Controls.Add(this.btnCompleteTask);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.txtListOfTasks);
             this.Controls.Add(this.lblTitle);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DisplayAllTasks";
             this.Text = "DisplayAllTasks";
             this.Load += new System.EventHandler(this.DisplayAllTasks_Load);
@@ -115,5 +128,6 @@
         private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCompleteTask;
+        private System.Windows.Forms.Button btnEditTask;
     }
 }

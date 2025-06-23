@@ -39,6 +39,7 @@
             this.txtErrorMessage = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dtpReminderDate = new System.Windows.Forms.DateTimePicker();
+            this.btnShowTasks = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTaskName
@@ -74,7 +75,7 @@
             // txtTaskName
             // 
             this.txtTaskName.Location = new System.Drawing.Point(11, 53);
-            this.txtTaskName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTaskName.Margin = new System.Windows.Forms.Padding(4);
             this.txtTaskName.Name = "txtTaskName";
             this.txtTaskName.Size = new System.Drawing.Size(301, 259);
             this.txtTaskName.TabIndex = 3;
@@ -83,7 +84,7 @@
             // txtTaskDescription
             // 
             this.txtTaskDescription.Location = new System.Drawing.Point(356, 53);
-            this.txtTaskDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTaskDescription.Margin = new System.Windows.Forms.Padding(4);
             this.txtTaskDescription.Name = "txtTaskDescription";
             this.txtTaskDescription.Size = new System.Drawing.Size(301, 259);
             this.txtTaskDescription.TabIndex = 4;
@@ -92,7 +93,7 @@
             // btnSaveTask
             // 
             this.btnSaveTask.Location = new System.Drawing.Point(888, 321);
-            this.btnSaveTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSaveTask.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveTask.Name = "btnSaveTask";
             this.btnSaveTask.Size = new System.Drawing.Size(160, 68);
             this.btnSaveTask.TabIndex = 6;
@@ -103,7 +104,7 @@
             // btnCancelTask
             // 
             this.btnCancelTask.Location = new System.Drawing.Point(11, 320);
-            this.btnCancelTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelTask.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelTask.Name = "btnCancelTask";
             this.btnCancelTask.Size = new System.Drawing.Size(160, 68);
             this.btnCancelTask.TabIndex = 7;
@@ -113,10 +114,10 @@
             // 
             // txtErrorMessage
             // 
-            this.txtErrorMessage.Location = new System.Drawing.Point(312, 324);
-            this.txtErrorMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtErrorMessage.Location = new System.Drawing.Point(355, 324);
+            this.txtErrorMessage.Margin = new System.Windows.Forms.Padding(4);
             this.txtErrorMessage.Name = "txtErrorMessage";
-            this.txtErrorMessage.Size = new System.Drawing.Size(432, 62);
+            this.txtErrorMessage.Size = new System.Drawing.Size(389, 62);
             this.txtErrorMessage.TabIndex = 8;
             this.txtErrorMessage.Text = "";
             // 
@@ -129,16 +130,28 @@
             // dtpReminderDate
             // 
             this.dtpReminderDate.Location = new System.Drawing.Point(745, 134);
-            this.dtpReminderDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpReminderDate.Margin = new System.Windows.Forms.Padding(4);
             this.dtpReminderDate.Name = "dtpReminderDate";
             this.dtpReminderDate.Size = new System.Drawing.Size(265, 22);
             this.dtpReminderDate.TabIndex = 9;
+            // 
+            // btnShowTasks
+            // 
+            this.btnShowTasks.Location = new System.Drawing.Point(179, 320);
+            this.btnShowTasks.Margin = new System.Windows.Forms.Padding(4);
+            this.btnShowTasks.Name = "btnShowTasks";
+            this.btnShowTasks.Size = new System.Drawing.Size(160, 68);
+            this.btnShowTasks.TabIndex = 10;
+            this.btnShowTasks.Text = "Show Tasks";
+            this.btnShowTasks.UseVisualStyleBackColor = true;
+            this.btnShowTasks.Click += new System.EventHandler(this.button1_Click);
             // 
             // TaskAssistant_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 404);
+            this.Controls.Add(this.btnShowTasks);
             this.Controls.Add(this.dtpReminderDate);
             this.Controls.Add(this.txtErrorMessage);
             this.Controls.Add(this.btnCancelTask);
@@ -148,7 +161,7 @@
             this.Controls.Add(this.lblTaskReminder);
             this.Controls.Add(this.lblTaskDescription);
             this.Controls.Add(this.lblTaskName);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TaskAssistant_GUI";
             this.Text = "TaskAssistant_GUI";
             this.Load += new System.EventHandler(this.TaskAssistant_GUI_Load);
@@ -169,5 +182,6 @@
         private System.Windows.Forms.RichTextBox txtErrorMessage;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.DateTimePicker dtpReminderDate;
+        private System.Windows.Forms.Button btnShowTasks;
     }
 }

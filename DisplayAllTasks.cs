@@ -229,14 +229,23 @@ namespace PROG_6221_ST10438409_Part_3_POE
             btnCompleteTask.Cursor = Cursors.Hand;
             btnCompleteTask.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 150, 200);
             btnCompleteTask.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 120, 180);
-            //-------------------------------------------------//
 
+            btnEditTask.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            btnEditTask.BackColor = Color.FromArgb(0, 200, 255);
+            btnEditTask.ForeColor = Color.White;
+            btnEditTask.FlatStyle = FlatStyle.Flat;
+            btnEditTask.FlatAppearance.BorderSize = 0;
+            btnEditTask.Cursor = Cursors.Hand;
+            btnEditTask.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 150, 200);
+            btnEditTask.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 120, 180);
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             // Make every button have round edges 
             SetButtonRoundEdge(btnReturn, 20);
             SetButtonRoundEdge(btnDelete, 20);
             SetButtonRoundEdge(btnCompleteTask, 20);
+            SetButtonRoundEdge(btnEditTask, 20);
             //-------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//
@@ -495,6 +504,100 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 MessageBox.Show("Task marked as completed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // Edit a task method
+        private void btnEditTask_Click(object sender, EventArgs e)
+        {
+            //-------------------------------------------------//
+            // Ask the user to enter the task title they want to edit
+            string taskToEdit = Interaction.InputBox("Enter the title of the task you want to edit:", "Edit Task", "", -1, -1);
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Check if the user entered a task title
+            if (string.IsNullOrWhiteSpace(taskToEdit))
+            {
+                Communication.TextToSpeech("No task title entered.");
+                MessageBox.Show("No task title entered.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Find the task in the ArrayList
+            TaskAssistant taskToEditObj = null;
+            foreach (TaskAssistant task in taskArrayList)
+            {
+                if (task.Title.Equals(taskToEdit, StringComparison.OrdinalIgnoreCase))
+                {
+                    taskToEditObj = task;
+                    break;
+                }
+            }
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // If the task was found, prompt the user to edit its details
+            if (taskToEditObj != null)
+            {
+                //-------------------------------------------------//
+                // Prompt the user to edit the task details
+                string newTitle = Interaction.InputBox("Edit Task Title:", "Edit Task", taskToEditObj.Title, -1, -1);
+                string newDescription = Interaction.InputBox("Edit Task Description:", "Edit Task", taskToEditObj.Description, -1, -1);
+                string newReminder = Interaction.InputBox("Edit Task Reminder:", "Edit Task", taskToEditObj.OptionalReminder, -1, -1);
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Update the task details
+                taskToEditObj.Title = newTitle;
+                taskToEditObj.Description = newDescription;
+                taskToEditObj.OptionalReminder = newReminder;
+                //-------------------------------------------------//
+                // Save the updated tasks back to the file
+                string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Tasks.txt");
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(filePath, false))
+                {
+                    //-------------------------------------------------//
+                    // Write each task in the ArrayList to the file
+                    foreach (TaskAssistant task in taskArrayList)
+                    {
+                        writer.WriteLine("Title: " + task.Title);
+                        if (!string.IsNullOrEmpty(task.Description))
+                            writer.WriteLine("Description: " + task.Description);
+                        if (!string.IsNullOrEmpty(task.OptionalReminder))
+                            writer.WriteLine("Reminder: " + task.OptionalReminder);
+                        writer.WriteLine("Status: " + (string.IsNullOrEmpty(task.Status) ? "Not Started" : task.Status));
+                        writer.WriteLine("-------------------------------");
+                    }
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Refresh the RichTextBox
+                txtListOfTasks.Clear();
+                foreach (TaskAssistant task in taskArrayList)
+                {
+                    txtListOfTasks.AppendText(
+                        $"Title: {task.Title}{Environment.NewLine}" +
+                        (!string.IsNullOrEmpty(task.Description) ? $"Description: {task.Description}{Environment.NewLine}" : "") +
+                        (!string.IsNullOrEmpty(task.OptionalReminder) ? $"Reminder: {task.OptionalReminder}{Environment.NewLine}" : "") +
+                        (!string.IsNullOrEmpty(task.Status) ? $"Status: {task.Status}{Environment.NewLine}" : "") +
+                        "-------------------------------" + Environment.NewLine
+                    );
+                }
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Show a success message
+                Communication.TextToSpeech("Task edited successfully.");
+                MessageBox.Show("Task edited successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //-------------------------------------------------//
+            }
+            //------------------------------------------------------------------------------------------------------------------//
         }
         //------------------------------------------------------------------------------------------------------------------//
     }

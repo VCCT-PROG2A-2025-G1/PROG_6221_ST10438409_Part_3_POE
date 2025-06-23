@@ -121,6 +121,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 if (!string.IsNullOrEmpty(optionalReminder))
                 {
                     writer.WriteLine("Reminder: " + optionalReminder);
+                    Console.WriteLine("Reminder: " + optionalReminder);
                 }
                 //-------------------------------------------------//
 
