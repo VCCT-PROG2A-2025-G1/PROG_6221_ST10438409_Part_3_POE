@@ -21,7 +21,7 @@ using System.Windows.Forms;
 
 //------------------------------------------------------------------------------------------------------------------//
 
-//------------------------------------------------------------------------------------------------------------------//
+//-----------------------------------------------------------------------------------------------------------------//
 // <summary>
 // The namespace is used to group classes that are logically related.
 // </summary>
@@ -72,6 +72,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
             lblCybersecurityChatbot.Visible = false;
             lblErrorMessage.Visible = false;
             lblUsername.Visible = false;
+            lblExplain.Visible = false;
             //-------------------------------------------------//
 
             //-------------------------------------------------//
@@ -90,6 +91,13 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
             await Task.Delay(200);
             lblErrorMessage.Visible = true;
+
+            await Task.Delay(200);
+            lblExplain.Visible = true;
+            string explain = "Type your message below and press Enter or click Send to chat with me.";
+
+
+            lblExplain.Text = explain;
             //-------------------------------------------------//
 
             //-------------------------------------------------//
@@ -225,6 +233,29 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 new Point(btnSend.Width - 10, btnSend.Height), new Point(10, btnSend.Height), new Point(0, btnSend.Height - 10)
                     },
                     new byte[] 
+                    {
+                        1, 1, 1, 1, 1, 1, 1, 1
+                    }
+                ));
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Button styling for help button
+            btnHelp.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            btnHelp.BackColor = Color.FromArgb(0, 200, 255);
+            btnHelp.ForeColor = Color.White;
+            btnHelp.FlatStyle = FlatStyle.Flat;
+            btnHelp.FlatAppearance.BorderSize = 0;
+            btnHelp.Cursor = Cursors.Hand;
+            btnHelp.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 150, 200);
+            btnHelp.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 120, 180);
+            btnHelp.Region = new Region(new GraphicsPath(
+                new[] {
+                new Point(0, 10), new Point(10, 0), new Point(btnHelp.Width - 10, 0),
+                new Point(btnHelp.Width, 10), new Point(btnHelp.Width, btnSend.Height - 10),
+                new Point(btnHelp.Width - 10, btnHelp.Height), new Point(10, btnHelp.Height), new Point(0, btnHelp.Height - 10)
+                    },
+                    new byte[]
                     {
                         1, 1, 1, 1, 1, 1, 1, 1
                     }
@@ -509,6 +540,31 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 e.Graphics.FillRectangle(brush, this.ClientRectangle);
             }
             //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        //This button will used to tell the user how to use the chatbot
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            //-------------------------------------------------//
+            // set the help message
+            string helpMessage = "This is a overview of what I am capable of helping you with!\n\n" +
+                                 "1. Type your message in the input box.\n" +
+                                 "2. Type 'show tasks' to get a list of created tasks\n" +
+                                 "3. You can ask the chatbot to add a task.\n" +
+                                 "4. You can ask the chatbot to set a reminder.\n" +
+                                 "5. You can ask the chatbot to start a quiz to test your knowledge by typing 'start quiz'.\n" +
+                                 "6. If you want to exit, type 'exit' and press Enter.\n\n" +
+                                 "Feel free to ask about cybersecurity topics, tips, or any questions you have!";
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Speak out loud and print in chatbot output
+            Communication.TextToSpeech(helpMessage);
+            TypeTextToChatbotOutputAsync(helpMessage);
+            //-------------------------------------------------//
+
         }
         //------------------------------------------------------------------------------------------------------------------//
 
