@@ -126,7 +126,7 @@ You: quiz
 
 You: show log
 
-Chatbot: Here’s a summary of recent actions:  
+Chatbot: Hereâ€™s a summary of recent actions:  
 1. Task Added: update antivirus on 2025/05/30  
 2. Quiz Started: Cybersecurity Basics
 
