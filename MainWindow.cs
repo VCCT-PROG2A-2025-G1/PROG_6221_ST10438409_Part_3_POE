@@ -382,7 +382,10 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
-        // 'text'
+        // This method starts the conversation loop for the chatbot.
+        // It continuously waits for user input, processes it, and provides responses.
+        // The method uses asynchronous programming to handle user input without blocking the UI.
+        // It was created with the help of GitHub Copilot.
         // </summary>
         public async Task StartConversationAsync()
         {
