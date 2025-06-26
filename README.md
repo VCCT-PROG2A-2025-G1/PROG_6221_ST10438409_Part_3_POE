@@ -9,7 +9,7 @@ This project is a comprehensive, console and GUI-based chatbot application desig
 
 - **YouTube Video Part 1:** [Cybersecurity Chatbot Demo (Part 1)](https://youtu.be/RThOkKN5AXs)
 - **YouTube Video Part 2:** [Cybersecurity Chatbot Demo (Part 2)](https://youtu.be/Uc0FjkQAyYA)
-- **YouTube Video Part 3:** [Cybersecurity Chatbot Demo (Part 3)](https://youtu.be/b6MAXRMcszE)
+- **YouTube Video Part 3:** [Cybersecurity Chatbot Demo (Part 3)](https://youtu.be/_-IDloWlnqQ)
 
 ---
 

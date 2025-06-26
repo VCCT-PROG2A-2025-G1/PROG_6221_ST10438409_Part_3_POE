@@ -646,7 +646,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
             //-------------------------------------------------//
             // Show a confirmation message before exiting
-            Dispose();
+            this.Dispose();
             MessageBox.Show("Thank you for participating in the quiz. You can now return to the main window.", "Exit Quiz", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //-------------------------------------------------//
 
