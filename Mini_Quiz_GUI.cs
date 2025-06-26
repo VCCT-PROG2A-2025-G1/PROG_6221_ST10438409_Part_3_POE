@@ -455,7 +455,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     this.Dispose();
                     //-----------------------------------//
                 }
-                else
+                else if(correctCount > 6)
                 {
                     Communication.TextToSpeech("Thank you for participating in the quiz. Keep learning and improving your cybersecurity knowledge!");
                     MessageBox.Show("Thank you for participating in the quiz. Keep learning and improving your cybersecurity knowledge!", "Thank You", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -467,24 +467,38 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     this.Dispose();
                     //-----------------------------------//
                 }
+                else
+                {
+                    Communication.TextToSpeech("Don't worry, you can keep learning and improving your cybersecurity knowledge. This will get you a better score next time.");
+                    MessageBox.Show("Don't worry, you can keep learning and improving your cybersecurity knowledge. This will get you a better score next time.", "Thank You", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //-----------------------------------//
+                    // Open Main Window and dispose this window
+                    MainWindow main = new MainWindow();
+                    main.ShowDialog();
+                    this.Dispose();
+                    //-----------------------------------/
+
+                    //-------------------------------------------------//
+                    //Open the Main Window
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.ShowDialog();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //dispose of the current form
+                    this.Dispose();
+                    //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //end method 
+                    return;
+                    //-------------------------------------------------//
+                }
                 //-------------------------------------------------//
 
-                //-------------------------------------------------//
-                //Open the Main Window
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.ShowDialog();
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                //dispose of the current form
-                this.Dispose();
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                //end method 
-                return;
-                //-------------------------------------------------//
             }
+            //-------------------------------------------------//
 
             //-------------------------------------------------//
             // Check if there are any quiz questions loaded

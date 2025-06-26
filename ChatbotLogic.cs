@@ -281,41 +281,6 @@ namespace PROG_6221_ST10438409_Part_3_POE
         }
         //------------------------------------------------------------------------------------------------------------------//
 
-        //-------------------------------------------------//
-        // Add to ChatbotLogic class
-        public static List<string> recentActions = new List<string>();
-        //-------------------------------------------------//
-
-        //------------------------------------------------------------------------------------------------------------------//
-        // <summary>
-        // This method returns a summary of recent actions taken by the user.
-        // </summary>
-        public static string GetRecentActionsSummary()
-        {
-            //-------------------------------------------------//
-            // Check if there are any recent actions
-            if (recentActions.Count == 0)
-            { 
-                return "No recent actions found.";
-            }
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Create a summary of recent actions
-            string summary = "Here’s a summary of recent actions:\n";
-            for (int i = 0; i < recentActions.Count; i++)
-            {
-                summary += $" {i + 1}. {recentActions[i]}\n";
-            }
-            //-------------------------------------------------//
-
-            //-------------------------------------------------//
-            // Trim the summary to remove any trailing whitespace or newlines
-            return summary.TrimEnd();
-            //-------------------------------------------------//
-        }
-        //------------------------------------------------------------------------------------------------------------------//
-
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
         // This method checks if the user wants to create a task and opens the Task Assistant GUI if so.
@@ -395,9 +360,8 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
-                    // Add to the summary and recent actions
+                    // create to the summary and recent actions
                     string summary = $"Reminder set for '{title}'" + (string.IsNullOrEmpty(date) ? "" : $" on {date}") + ".";
-                    recentActions.Add(summary);
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
@@ -478,9 +442,8 @@ namespace PROG_6221_ST10438409_Part_3_POE
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
-                    // Add to the summary and recent actions
+                    // create the summary and recent actions
                     string summary = $"Task added: '{title}'. Would you like to set a reminder for this task?";
-                    recentActions.Add($"Task added: '{title}' (no reminder set).");
                     //-------------------------------------------------//
 
                     //-------------------------------------------------//
@@ -504,6 +467,9 @@ namespace PROG_6221_ST10438409_Part_3_POE
                          log = "Task Added: " + title + " on " + DateTime.Now;
                     }
                     //-------------------------------------------------//
+
+                    //-------------------------------------------------//
+                    //create log entry
                     ActivityLog.addEntry(log);
                     //-------------------------------------------------//
 
@@ -621,14 +587,6 @@ namespace PROG_6221_ST10438409_Part_3_POE
         public static async Task<string> GetResponse(string message, string userName, MainWindow mainWindow)
         {
             responses = LoadResponses();
-
-            //-------------------------------------------------//
-            // Check if the user wants a task list summary_
-            if (message.ToLower().Contains("what have you done for me"))
-            {
-                return GetRecentActionsSummary();
-            }
-            //-------------------------------------------------//
 
             //-------------------------------------------------//
             //check task assistant

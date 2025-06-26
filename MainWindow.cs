@@ -158,8 +158,23 @@ namespace PROG_6221_ST10438409_Part_3_POE
 
                 //-------------------------------------------------//
                 // Optional: Scroll to end if multiline
-                txtChatbotOutput.SelectionStart = txtChatbotOutput.Text.Length;
-                txtChatbotOutput.ScrollToCaret();
+                if (txtChatbotOutput.InvokeRequired)
+                {
+                    //-------------------------------------------------//
+                    txtChatbotOutput.Invoke(new Action(() =>
+                    {
+                        txtChatbotOutput.SelectionStart = txtChatbotOutput.Text.Length;
+                        txtChatbotOutput.ScrollToCaret();
+                    }));
+                    //-------------------------------------------------//
+                }
+                else
+                {
+                    //-------------------------------------------------//
+                    txtChatbotOutput.SelectionStart = txtChatbotOutput.Text.Length;
+                    //-------------------------------------------------//
+                }
+
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//

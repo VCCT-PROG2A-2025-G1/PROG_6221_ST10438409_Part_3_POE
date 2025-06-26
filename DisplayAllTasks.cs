@@ -595,6 +595,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 // Show a success message
                 Communication.TextToSpeech("Task edited successfully.");
                 MessageBox.Show("Task edited successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActivityLog.addEntry("Task: " + newTitle + " was edited");
                 //-------------------------------------------------//
             }
             //------------------------------------------------------------------------------------------------------------------//

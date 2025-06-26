@@ -38,6 +38,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
         //-------------------------------------------------//
         // Declare a static variable to store the chatbot responses
         public static Dictionary<string, Dictionary<string, string>> responses;
+        private static bool showingLogs = false;
         //-------------------------------------------------//
 
         //-------------------------------------------------//
@@ -110,7 +111,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 //-------------------------------------------------//
                 // Call TextToSpeech method to convert the goodbye message to speech
                 Communication.TextToSpeech("Goodbye " + userName + ", have a great day!\n");
-                await mainWindow.TypeTextToChatbotOutputAsync("Goodbye " + userName + ", have a great day!\n");                
+                await mainWindow.TypeTextToChatbotOutputAsync("Goodbye " + userName + ", have a great day!\n");
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
@@ -125,31 +126,75 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 await ChatbotLogic.ListPossibleQuestions(mainWindow);
                 //-------------------------------------------------//
             }
-            else if(userMessage.ToLower().Contains("show") && userMessage.ToLower().Contains("log") || userMessage.ToLower().Contains("what have you done for me"))
+            else if ((userMessage.ToLower().Contains("show") && userMessage.ToLower().Contains("log")) || userMessage.ToLower().Contains("what have you done for me"))
             {
-
                 //-------------------------------------------------//
-                // Make the string title
-                string message = "Here’s a summary of recent actions:\n";
-                //-------------------------------------------------//
-
-                //-------------------------------------------------//
-                // Get the last five entries from the activity log
-                string lastFiveEntries = ActivityLog.getLastFiveEntries();
+                // Reset the activity log pagination and set showingLogs to true
+                ActivityLog.ResetPagination();
+                showingLogs = true;
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
-                // Combine the message and the last five entries
-                string fullMessage = message + lastFiveEntries;
+                // Print the last 5 activity log entries
+                string logEntries = ActivityLog.GetNextEntries();
                 //-------------------------------------------------//
 
                 //-------------------------------------------------//
-                // Print the activity log entries to the chatbot output
+                // Only show "show more" prompt if there's more content to fetch
+                string fullMessage = "Here’s a summary of recent actions:\n" + logEntries;
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // If there are more entrys
+                if (!logEntries.Contains("No more"))
+                {
+                    fullMessage += "\nWould you like to see more? Say 'show more' or ask another question.";
+                }
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                //Print the output and Speak to the user
                 Communication.TextToSpeech(fullMessage);
                 await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
                 //-------------------------------------------------//
-
             }
+            else if (showingLogs && userMessage.ToLower().Contains("more"))
+            {
+                //-------------------------------------------------//
+                // Get the next set of log entries
+                string nextEntries = ActivityLog.GetNextEntries();
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Include follow-up prompt only if there are more entries
+                string fullMessage = nextEntries;
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // If more logs are detected
+                if (!nextEntries.Contains("No more"))
+                {
+                    //-------------------------------------------------//
+                    // Ask the user
+                    fullMessage += "\nWould you like to see more? Say 'show more' or ask another question.";
+                    //-------------------------------------------------//
+                }
+                else
+                {
+                    //-------------------------------------------------//
+                    // exit pagination mode
+                    showingLogs = false;
+                    //-------------------------------------------------//
+                }
+                //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Print out and talk to the user
+                Communication.TextToSpeech(fullMessage);
+                await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
+                //-------------------------------------------------//
+            }
+
             else
             {
                 //-------------------------------------------------//
@@ -178,6 +223,11 @@ namespace PROG_6221_ST10438409_Part_3_POE
                 // Print the chatbot's response to the chatbot output
                 await mainWindow.TypeTextToChatbotOutputAsync(fullMessage);
                 //-------------------------------------------------//
+
+                //-------------------------------------------------//
+                // Add an Activty log of the users question:
+                string log = userName + " asked the chatbot: " + userMessage;
+                ActivityLog.addEntry(log);
             }
             //-------------------------------------------------//
         }

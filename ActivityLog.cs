@@ -13,6 +13,7 @@
 // <summary>
 // These import statements are used to import the necessary libraries for the program to run.
 // </summary>
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace PROG_6221_ST10438409_Part_3_POE
         //Declare the list to hold activity log entries
         private static List<string> activityLogEntries = new List<string>();
         private static int number = 1;
+        private static int currentIndex = 0;
         //-------------------------------------------------//
 
         //------------------------------------------------------------------------------------------------------------------//
@@ -67,8 +69,12 @@ namespace PROG_6221_ST10438409_Part_3_POE
         //------------------------------------------------------------------------------------------------------------------//
         // <summary>
         // Return method that returns the last 5 activity log entries as a string.
+        // If there are fewer than 5 entries, it returns all available entries.
+        // If there are no entries, it returns a message indicating that there are no entries.
+        // The method also updates the current index to keep track of which entries have been returned.
+        // This method had assistance from GitHub Copilot.
         // </summary>
-        public static string getLastFiveEntries()
+        public static string GetNextEntries(int count = 5)
         {
             //-------------------------------------------------//
             // Check if the activity log entries list is null or empty
@@ -79,24 +85,54 @@ namespace PROG_6221_ST10438409_Part_3_POE
             //-------------------------------------------------//
 
             //-------------------------------------------------//
-            // if_ more than 5 logs, return only last five logs
-            if (activityLogEntries.Count <= 5)
+            // If this is the first call, set the currentIndex to the end
+            if (currentIndex == 0)
             {
-                return string.Join("", activityLogEntries);
+                //-------------------------------------------------//
+                // Set the currentIndex to the end of the list
+                return "No activity log entries available.";
+                //-------------------------------------------------//
             }
+            //--------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Determine how many entries to fetch
+            int fetchCount = Math.Min(count, currentIndex);
+            int startIndex = currentIndex - fetchCount;
             //-------------------------------------------------//
 
             //-------------------------------------------------//
-            // Get the last 5 entries from the activity log
-            int startIndex = Math.Max(0, activityLogEntries.Count - 5);
-            List<string> lastFiveEntries = activityLogEntries
-                .Cast<string>()
+            // Get entries in reverse order (newest first)
+            // Reverse to display newest at the top
+            // GitHub Copilot helped in creating this code block
+            var nextEntries = activityLogEntries
                 .Skip(startIndex)
+                .Take(fetchCount)
+                .Reverse() 
                 .ToList();
             //-------------------------------------------------//
-            // Join the entries into a single string and return it
-            return string.Join("", lastFiveEntries);
+
             //-------------------------------------------------//
+            // Update currentIndex for next pagination
+            currentIndex -= fetchCount;
+            //-------------------------------------------------//
+
+            //-------------------------------------------------//
+            // Return the string
+            return string.Join("\n", nextEntries);
+            //-------------------------------------------------//
+        }
+        //------------------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------------//
+        // <summary>
+        // Reset the pagination of the activity log entries.
+        // This method sets the current index back to 0,
+        // allowing the log to be read from the beginning again.
+        // </summary>
+        public static void ResetPagination()
+        {
+            currentIndex = activityLogEntries.Count;
         }
         //------------------------------------------------------------------------------------------------------------------//
 
